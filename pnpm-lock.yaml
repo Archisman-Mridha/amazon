@@ -29,12 +29,16 @@ specifiers:
   '@types/react-dom': 18.0.3
   '@types/react-is': 17.0.3
   '@types/react-router-dom': 5.3.3
+  '@types/react-test-renderer': ^18.0.0
   '@types/styled-components': 5.1.25
   '@typescript-eslint/eslint-plugin': ~5.18.0
   '@typescript-eslint/parser': ~5.18.0
+  aws-cdk: 2.23.0
+  aws-cdk-lib: 2.23.0
   babel-jest: 27.5.1
   babel-loader: 8.1.0
   babel-plugin-styled-components: 1.10.7
+  constructs: ^10.0.0
   core-js: ^3.6.5
   cypress: ^9.1.0
   eslint: ~8.12.0
@@ -55,6 +59,7 @@ specifiers:
   react-router-dom: 6.3.0
   react-test-renderer: 18.1.0
   regenerator-runtime: 0.13.7
+  source-map-support: ^0.5.21
   styled-components: 5.3.5
   ts-jest: 27.1.4
   ts-node: 9.1.1
@@ -67,6 +72,8 @@ dependencies:
   '@emotion/react': 11.0.0_4l65rmx5uepr75ptr3d56ivz2i
   '@emotion/styled': 11.8.1_4updbpdhajj2qi6zoaqplhi64a
   '@nrwl/nx-cloud': 14.0.3
+  aws-cdk-lib: 2.23.0_constructs@10.1.6
+  constructs: 10.1.6
   core-js: 3.22.5
   framer-motion: 6.3.3_ef5jwxihqo6n7gxfmzogljlgcm
   react: 18.1.0
@@ -75,6 +82,7 @@ dependencies:
   react-is: 18.1.0
   react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
   regenerator-runtime: 0.13.7
+  source-map-support: 0.5.21
   styled-components: 5.3.5_4klixn56hmiqf6hh5nx3jyckvq
   tslib: 2.4.0
 
@@ -103,9 +111,11 @@ devDependencies:
   '@types/react-dom': 18.0.3
   '@types/react-is': 17.0.3
   '@types/react-router-dom': 5.3.3
+  '@types/react-test-renderer': 18.0.0
   '@types/styled-components': 5.1.25
   '@typescript-eslint/eslint-plugin': 5.18.0_qop66kdz473gtxyqakjhziybiy
   '@typescript-eslint/parser': 5.18.0_uhoeudlwl7kc47h4kncsfowede
+  aws-cdk: 2.23.0
   babel-jest: 27.5.1_@babel+core@7.12.13
   babel-loader: 8.1.0_@babel+core@7.12.13
   babel-plugin-styled-components: 1.10.7_styled-components@5.3.5
@@ -6452,6 +6462,12 @@ packages:
       '@types/react': 18.0.8
     dev: true
 
+  /@types/react-test-renderer/18.0.0:
+    resolution: {integrity: sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==}
+    dependencies:
+      '@types/react': 18.0.8
+    dev: true
+
   /@types/react/18.0.8:
     resolution: {integrity: sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==}
     dependencies:
@@ -7481,6 +7497,33 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
+  /aws-cdk-lib/2.23.0_constructs@10.1.6:
+    resolution: {integrity: sha512-ewUgVRnXA31yZPz/X1BfyVgzCBlPfyjadmkYQsZgT3vRE+NbddTRG4O5r+k9O46xLC41YV8ZMCnhsfPfa5VRKA==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      constructs: ^10.0.0
+    dependencies:
+      constructs: 10.1.6
+    dev: false
+    bundledDependencies:
+      - '@balena/dockerignore'
+      - case
+      - fs-extra
+      - ignore
+      - jsonschema
+      - minimatch
+      - punycode
+      - semver
+      - yaml
+
+  /aws-cdk/2.23.0:
+    resolution: {integrity: sha512-sfVrFImP+mRVdqCDsJcM63inAp9/XSmmeE2hlg8Bqwf7WUblRmj22xiD53VbL2dkc1la6UN05TkfNDAGT0skow==}
+    engines: {node: '>= 14.15.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /aws-sign2/0.7.0:
     resolution: {integrity: sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=}
     dev: true
@@ -8131,7 +8174,6 @@ packages:
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
-    dev: true
 
   /buffer-xor/1.0.3:
     resolution: {integrity: sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=}
@@ -8730,6 +8772,11 @@ packages:
   /constants-browserify/1.0.0:
     resolution: {integrity: sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=}
     dev: true
+
+  /constructs/10.1.6:
+    resolution: {integrity: sha512-67RUgF9MScCUuYQ2jr4SgcVcTV4YWeGa13cLOGUivzlpMVN6DSm0p/OQz5X49GHUeY/i+AMZMxGVy9xN6sM07g==}
+    engines: {node: '>= 14.17.0'}
+    dev: false
 
   /content-disposition/0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -16715,7 +16762,6 @@ packages:
     dependencies:
       buffer-from: 1.1.2
       source-map: 0.6.1
-    dev: true
 
   /source-map-url/0.4.1:
     resolution: {integrity: sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==}
@@ -16729,7 +16775,6 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /source-map/0.7.3:
     resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}

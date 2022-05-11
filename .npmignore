@@ -1,0 +1,5 @@
+aws/*.ts
+aws/!*.d.ts
+
+aws/.cdk.staging
+aws/cdk.out

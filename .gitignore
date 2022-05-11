@@ -35,3 +35,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# infrastucture as code directory files to exclude
+aws/*.js
+aws/!jest.config.js
+aws/*.d.ts
+
+# CDK asset staging directory
+aws/.cdk.staging
+aws/cdk.out
