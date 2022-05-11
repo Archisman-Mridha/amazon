@@ -1,4 +1,4 @@
-import { Providers } from "@./web"
+import { FC } from "react"
 import { Navbar } from "./navbar.component"
 
 export default {
@@ -7,9 +7,4 @@ export default {
     component: Navbar
 }
 
-export const LoggedOutState= ( ) => (
-
-    <Providers>
-        <Navbar />
-    </Providers>
-)
+export const LoggedOutState: FC= ( ) => <Navbar />

@@ -1,5 +1,4 @@
 import { FC } from "react"
-import { Providers } from "@./web"
 import { Searchbar } from "./searchbar.component"
 
 export default {
@@ -8,9 +7,4 @@ export default {
     component: Searchbar
 }
 
-export const DefaultState: FC= ( ) => (
-
-    <Providers>
-        <Searchbar />
-    </Providers>
-)
+export const DefaultState: FC= ( ) => <Searchbar />

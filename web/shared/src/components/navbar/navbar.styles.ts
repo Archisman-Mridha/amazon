@@ -7,6 +7,8 @@ export const NavbarOptionsLayout= styled(Flex)`
     color: white;
     align-items: center;
     padding: 12.5px 10px;
+    width: 100%;
+    backdrop-filter: blur(40px);
 
     .menu-toggler {
         display: none;

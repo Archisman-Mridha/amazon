@@ -22,8 +22,8 @@ export const SearchInput= styled.input`
 
     outline: none;
     padding: 7.5px;
-    flex: 1;
     font-weight: 500;
+    flex: 1;
 `
 
 export const SearchButton= styled(Flex)`

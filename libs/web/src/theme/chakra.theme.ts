@@ -7,12 +7,27 @@ export const chakraTheme= extendTheme({
         body: "montserrat"
     },
 
+    styles: {
+        global: {
+            "*": {
+
+                fontWeight: 500,
+                boxSizing: "border-box"
+            }
+        }
+    },
+
     components: {
 
-        Text: {
+        Link: {
             baseStyle: {
 
-                fontWeight: 500
+                transition: "all, 0.5s",
+                _hover: {
+
+                    textDecoration: "none",
+                    color: "#C5FFF4"
+                }
             }
         }
     }
