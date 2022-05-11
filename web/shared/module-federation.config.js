@@ -1,6 +1,11 @@
 module.exports = {
     name: "shared",
     exposes: {
-        "./exposed": "./src/remote-entry.ts"
+        "./navbar": "./src/components/navbar/navbar.component.tsx"
+    },
+    shared: dependencyName => {
+
+        if(dependencyName === "react-icons")
+            return false
     }
 }

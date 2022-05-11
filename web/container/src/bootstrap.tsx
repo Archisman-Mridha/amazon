@@ -1,10 +1,12 @@
-import { StrictMode } from "react"
+import { lazy, StrictMode } from "react"
 import * as ReactDOM from "react-dom/client"
-import { BrowserRouter } from "react-router-dom"
+import { Providers } from "@./web"
+import { Routes } from "./routes/routes"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <StrictMode>
-        <BrowserRouter>
-        </BrowserRouter>
+        <Providers>
+            <Routes />
+        </Providers>
     </StrictMode>
 )

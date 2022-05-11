@@ -1,7 +1,8 @@
 {
     "version": 2,
     "projects": {
-        "container": "apps/container",
-        "shared": "apps/shared"
+        "container": "web/container",
+        "shared": "web/shared",
+        "web": "libs/web"
     }
 }
