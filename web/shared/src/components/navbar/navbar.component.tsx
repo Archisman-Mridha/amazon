@@ -7,14 +7,14 @@ import { FiMenu, FiSettings } from "react-icons/fi"
 import { BsBoxSeam } from "react-icons/bs"
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { Searchbar } from "../searchbar/searchbar.component"
-import { MobileMenu } from "../mobilemenu/mobilemenu.component"
+import { Menu } from "../menu/menu.component"
 
 export const Navbar: FC= ( ) => {
 
     return (
         <>
             <IconContext.Provider value= {{ color: "white", size: "22px" }}>
-                <MobileMenu />
+                <Menu />
 
                 <NavbarOptionsLayout>
                     <AmazonLogo src= {AmazonLogoPath} />

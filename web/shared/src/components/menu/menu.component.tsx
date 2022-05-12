@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { DeliveryLocationLayout, Header, MobileMenuLayout, HeaderRow, MenuItemSubText, MenuItemText, MenuItemLayout, CartCount, Separator } from "./mobilemenu.styles"
+import { DeliveryLocationLayout, Header, MenuLayout, HeaderRow, MenuItemSubText, MenuItemText, MenuItemLayout, CartCount, Separator } from "./menu.styles"
 import { IoIosCloseCircle } from "react-icons/io"
 import { HiOutlineLocationMarker } from "react-icons/hi"
 import { IconContext } from "react-icons"
@@ -9,12 +9,12 @@ import { CategorySVGPath, SignoutSVGPath } from "@./web"
 import { AiOutlineFieldTime, AiOutlineUser } from "react-icons/ai"
 import { FiEye, FiShoppingBag } from "react-icons/fi"
 
-export const MobileMenu: FC= ( ) => {
+export const Menu: FC= ( ) => {
 
     return (
         <>
             <IconContext.Provider value= {{ color: "white", size: "22px", style: { marginRight: "10px" } }}>
-                <MobileMenuLayout>
+                <MenuLayout>
                     <HeaderRow>
                         <Header>Navigation Menu</Header>
 
@@ -88,7 +88,7 @@ export const MobileMenu: FC= ( ) => {
                             <Link href= "">Sign Out</Link>
                         </Flex>
                     </MenuItemLayout>
-                </MobileMenuLayout>
+                </MenuLayout>
             </IconContext.Provider>
         </>
     )

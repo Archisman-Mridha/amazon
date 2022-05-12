@@ -42,5 +42,5 @@ aws/!jest.config.js
 aws/*.d.ts
 
 # CDK asset staging directory
-aws/.cdk.staging
-aws/cdk.out
+.cdk.staging
+cdk.out

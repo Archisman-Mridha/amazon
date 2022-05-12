@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react"
 import styled from "styled-components"
 
-export const MobileMenuLayout= styled(Flex)`
+export const MenuLayout= styled(Flex)`
 
     flex-direction: column;
     height: 100vh;
