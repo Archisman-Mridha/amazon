@@ -1,6 +1,7 @@
 {
     "version": 2,
     "projects": {
+        "aws": "aws",
         "container": "web/container",
         "shared": "web/shared",
         "web": "libs/web"

@@ -1,0 +1,30 @@
+{
+    "projectType": "application",
+    "sourceRoot": "aws/src",
+    "targets": {
+        "deploy": {
+            "executor": "@codebrew/nx-aws-cdk:deploy",
+            "options": {}
+        },
+        "destroy": {
+            "executor": "@codebrew/nx-aws-cdk:destroy",
+            "options": {}
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["aws/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/aws"],
+            "options": {
+                "jestConfig": "aws/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}
