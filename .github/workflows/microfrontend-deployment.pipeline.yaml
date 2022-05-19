@@ -28,7 +28,7 @@ jobs:
               uses: pnpm/action-setup@v2.0.1
               with:
                 version: 7
-                run_install: fals
+                run_install: false
 
             - name: setup pnpm cache
               uses: actions/cache@v3
