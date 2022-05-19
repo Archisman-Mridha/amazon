@@ -36,7 +36,7 @@ export class MicrofrontendDeploymentStack extends Stack {
 
         hostingBucket.grantRead(oai)
 
-        new Distribution(this, "cloudFrontDistribution", {
+        const cloudfrontDistribution= new Distribution(this, "cloudFrontDistribution", {
 
             defaultRootObject: "container/index.html",
             defaultBehavior: {
