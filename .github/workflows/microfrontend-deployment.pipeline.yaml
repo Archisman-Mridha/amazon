@@ -23,12 +23,14 @@ jobs:
               uses: actions/setup-node@v2
               with:
                 node-version: "16"
+                cache: "pnpm"
+                cache-dependency-path: pnpm-lock.yaml
 
             - name: install dependencies
-              run: yarn
+              run: pnpm install
 
             - name: generate microfrontend builds
-              run: yarn nx build shared && yarn nx build container
+              run: pnpm nx build shared && pnpm nx build container
 
             - name: install and configure aws-cli
               uses: aws-actions/configure-aws-credentials@master
@@ -38,7 +40,7 @@ jobs:
                 aws-region: "us-west-1"
 
             - name: generate CloudFormation template
-              run: yarn cdk synth
+              run: pnpm cdk synth
 
             - name: bootstrap and deploy stack
-              run: yarn cdk bootstrap --all --require-approval never && yarn cdk deploy --all --require-approval never
+              run: pnpm cdk bootstrap --all --require-approval never && pnpm cdk deploy --all --require-approval never

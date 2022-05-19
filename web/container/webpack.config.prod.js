@@ -7,5 +7,5 @@ module.exports = withModuleFederation({
         publicPath: "/container/"
     },
 
-    remotes: [["shared", "//localhost:4201/"]]
+    // remotes: [["shared", "//localhost:4201/"]]
 })

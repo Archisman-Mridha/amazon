@@ -16,6 +16,7 @@ export class MicrofrontendDeploymentStack extends Stack {
             removalPolicy: RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
             encryption: BucketEncryption.S3_MANAGED,
+            versioned: true,
             cors: [{
 
                 maxAge: 3000,
