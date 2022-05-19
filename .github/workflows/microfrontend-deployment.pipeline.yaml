@@ -37,5 +37,8 @@ jobs:
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
                 aws-region: "us-west-1"
 
-            - name: synth and deploy stack
-              run: yarn cdk synth && cdk bootstrap --all --require-approval never && yarn cdk deploy --all --require-approval never
+            - name: generate CloudFormation template
+              run: yarn cdk synth
+
+            - name: bootstrap and deploy stack
+              run: yarn cdk bootstrap --all --require-approval never && yarn cdk deploy --all --require-approval never
