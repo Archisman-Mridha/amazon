@@ -19,10 +19,12 @@ jobs:
             - name: checkout action
               uses: actions/checkout@v3
 
-            - name: install node.JS and dependencies
+            - name: install node.JS
               uses: actions/setup-node@v2
               with:
                 node-version: "16"
+
+            - name: install dependencies
               run: yarn
 
             - name: generate microfrontend builds
