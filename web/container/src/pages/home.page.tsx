@@ -8,7 +8,7 @@ export const Home: FC= ( ) => {
         <>
             {/* <Navbar /> */}
 
-            Hello from container
+            Hello from container app
         </>
     )
 }
