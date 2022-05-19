@@ -10,7 +10,7 @@
                 "compiler": "babel",
                 "outputPath": "dist/web/shared",
                 "index": "web/shared/src/index.html",
-                "baseHref": "/",
+                "baseHref": "/shared/",
                 "main": "web/shared/src/main.ts",
                 "polyfills": "web/shared/src/polyfills.ts",
                 "tsConfig": "web/shared/tsconfig.app.json",

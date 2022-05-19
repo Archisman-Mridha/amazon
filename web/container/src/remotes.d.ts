@@ -1,1 +1,1 @@
-// declare module "shared/navbar"
+declare module "shared/navbar"
