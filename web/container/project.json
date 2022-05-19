@@ -39,6 +39,7 @@
                     "namedChunks": false,
                     "extractLicenses": true,
                     "vendorChunk": false,
+                    "baseHref": "/container/",
                     "webpackConfig": "web/container/webpack.config.prod.js"
                 }
             }
