@@ -14,6 +14,7 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
+        "typeRoots": ["node_modules/@types"],
         "paths": {
             "@./web": ["libs/web/src/index.ts"]
         }

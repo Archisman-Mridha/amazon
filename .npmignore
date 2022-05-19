@@ -1,0 +1,6 @@
+aws/*.ts
+aws/!*.d.ts
+
+# CDK asset staging directory
+dist/aws/.cdk.staging
+dist/aws/cdk.out
