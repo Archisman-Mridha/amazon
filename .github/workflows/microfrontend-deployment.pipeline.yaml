@@ -38,4 +38,4 @@ jobs:
                 aws-region: "us-west-1"
 
             - name: synth and deploy stack
-              run: yarn cdk synth && yarn cdk deploy --all --require-approval never
+              run: yarn cdk synth && cdk bootstrap --all --require-approval never && yarn cdk deploy --all --require-approval never
