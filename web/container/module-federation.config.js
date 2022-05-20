@@ -1,4 +1,4 @@
 module.exports = {
     name: "container",
-    remotes: ["shared"]
+    remotes: ["shared", "store"]
 }

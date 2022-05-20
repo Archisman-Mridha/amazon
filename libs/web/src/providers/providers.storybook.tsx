@@ -1,12 +1,12 @@
-import { Center, ChakraProvider } from "@chakra-ui/react"
+import { Center } from "@chakra-ui/react"
 import { Component } from "react"
-import { chakraTheme } from "../theme/chakra.theme"
+import { Providers } from "./providers"
 
 export const withProviders= (Story: typeof Component) => (
 
-    <ChakraProvider theme= { chakraTheme }>
+    <Providers>
         <Center height= "100vh">
             <Story />
         </Center>
-    </ChakraProvider>
+    </Providers>
 )
