@@ -45,18 +45,29 @@ aws/*.d.ts
 .cdk.staging
 cdk.out
 
-# Expo
-node_modules/
-.expo/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
+# Flutter Miscellaneous
+app/*.class
+app/*.log
+app/*.pyc
+app/*.swp
+app/.DS_Store
+app/.atom/
+app/.buildlog/
+app/.history
+app/.svn/
+app/migrate_working_dir/
+app/**/doc/api/
+app/**/ios/Flutter/.last_build_id
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/.pub-cache/
+app/.pub/
+app//build/
 
+# Symbolication related
+app/app.*.symbols
 
-apps/app-e2e/artifacts
+# Obfuscation related
+app/app.*.map.json

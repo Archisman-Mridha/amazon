@@ -1,59 +1,51 @@
 {
-  "npmScope": ".",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
-  },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": ".",
+    "affected": {
+        "defaultBase": "main"
     },
-    ".eslintrc.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "build-storybook"
-        ],
-        "accessToken": "NjZlNzU4ZWEtMWY3My00ZTY1LWFiMjAtODZlOWM2MDUxNWI0fHJlYWQtd3JpdGU="
-      }
-    }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "styled-components",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "styled-components"
-      },
-      "library": {
-        "style": "styled-components",
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "container",
-  "plugins": [
-    "@nxrocks/nx-flutter"
-  ]
+    "cli": {
+        "defaultCollection": "@nrwl/react"
+    },
+    "implicitDependencies": {
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        ".eslintrc.json": "*"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/nx-cloud",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"],
+                "accessToken": "NjZlNzU4ZWEtMWY3My00ZTY1LWFiMjAtODZlOWM2MDUxNWI0fHJlYWQtd3JpdGU="
+            }
+        }
+    },
+    "targetDependencies": {
+        "build": [
+            {
+                "target": "build",
+                "projects": "dependencies"
+            }
+        ]
+    },
+    "generators": {
+        "@nrwl/react": {
+            "application": {
+                "style": "styled-components",
+                "linter": "eslint",
+                "babel": true
+            },
+            "component": {
+                "style": "styled-components"
+            },
+            "library": {
+                "style": "styled-components",
+                "linter": "eslint"
+            }
+        }
+    },
+    "defaultProject": "container",
+    "plugins": ["@nxrocks/nx-flutter"]
 }
