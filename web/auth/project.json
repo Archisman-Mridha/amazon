@@ -1,5 +1,5 @@
 {
-    "sourceRoot": "web/store/src",
+    "sourceRoot": "web/auth/src",
     "projectType": "application",
     "targets": {
         "build": {
@@ -8,16 +8,16 @@
             "defaultConfiguration": "production",
             "options": {
                 "compiler": "babel",
-                "outputPath": "dist/web/store",
-                "index": "web/store/src/index.html",
-                "baseHref": "/store/",
-                "main": "web/store/src/main.ts",
-                "polyfills": "web/store/src/polyfills.ts",
-                "tsConfig": "web/store/tsconfig.app.json",
-                "assets": ["web/store/src/assets"],
+                "outputPath": "dist/web/auth",
+                "index": "web/auth/src/index.html",
+                "baseHref": "/auth/",
+                "main": "web/auth/src/main.ts",
+                "polyfills": "web/auth/src/polyfills.ts",
+                "tsConfig": "web/auth/tsconfig.app.json",
+                "assets": ["web/auth/src/assets"],
                 "styles": [],
                 "scripts": [],
-                "webpackConfig": "web/store/webpack.config.js"
+                "webpackConfig": "web/auth/webpack.config.js"
             },
             "configurations": {
                 "development": {
@@ -29,8 +29,8 @@
                 "production": {
                     "fileReplacements": [
                         {
-                            "replace": "web/store/src/environments/environment.ts",
-                            "with": "web/store/src/environments/environment.prod.ts"
+                            "replace": "web/auth/src/environments/environment.ts",
+                            "with": "web/auth/src/environments/environment.prod.ts"
                         }
                     ],
                     "optimization": true,
@@ -39,7 +39,7 @@
                     "namedChunks": false,
                     "extractLicenses": true,
                     "vendorChunk": false,
-                    "webpackConfig": "web/store/webpack.config.prod.js"
+                    "webpackConfig": "web/auth/webpack.config.prod.js"
                 }
             }
         },
@@ -47,16 +47,16 @@
             "executor": "@nrwl/react:module-federation-dev-server",
             "defaultConfiguration": "development",
             "options": {
-                "buildTarget": "store:build",
+                "buildTarget": "auth:build",
                 "hmr": true,
-                "port": 4202
+                "port": 4203
             },
             "configurations": {
                 "development": {
-                    "buildTarget": "store:build:development"
+                    "buildTarget": "auth:build:development"
                 },
                 "production": {
-                    "buildTarget": "store:build:production",
+                    "buildTarget": "auth:build:production",
                     "hmr": false
                 }
             }
@@ -65,14 +65,14 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["web/store/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["web/auth/**/*.{ts,tsx,js,jsx}"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/web/store"],
+            "outputs": ["coverage/web/auth"],
             "options": {
-                "jestConfig": "web/store/jest.config.ts",
+                "jestConfig": "web/auth/jest.config.ts",
                 "passWithNoTests": true
             }
         },
@@ -80,15 +80,15 @@
             "executor": "@nrwl/web:file-server",
             "defaultConfiguration": "development",
             "options": {
-                "buildTarget": "store:build",
-                "port": 4202
+                "buildTarget": "auth:build",
+                "port": 4203
             },
             "configurations": {
                 "development": {
-                    "buildTarget": "store:build:development"
+                    "buildTarget": "auth:build:development"
                 },
                 "production": {
-                    "buildTarget": "store:build:production"
+                    "buildTarget": "auth:build:production"
                 }
             }
         }

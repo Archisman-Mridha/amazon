@@ -44,3 +44,19 @@ aws/*.d.ts
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# Expo
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+
+apps/app-e2e/artifacts

@@ -9,6 +9,8 @@ export class MicrofrontendDeploymentStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props)
 
+        //* used for deploying microfrontends
+
         const hostingBucket= new Bucket(this, "hostingBucket", {
 
             bucketName: PhysicalName.GENERATE_IF_NEEDED,

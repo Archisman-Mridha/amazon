@@ -1,9 +1,11 @@
 {
-    "version": 2,
-    "projects": {
-        "container": "web/container",
-        "shared": "web/shared",
-        "store": "web/store",
-        "web": "libs/web"
-    }
+  "version": 2,
+  "projects": {
+    "auth": "web/auth",
+    "container": "web/container",
+    "shared": "web/shared",
+    "store": "web/store",
+    "web": "libs/web",
+    "app": "apps/app"
+  }
 }
