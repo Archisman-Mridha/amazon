@@ -1,0 +1,19 @@
+{
+  "version": "18.0.0",
+  "files": {
+    "ce8b9dd2cf254618f0b75c94beb7da867c87f3a6e761740f1157499476829980": {
+      "source": {
+        "path": "AuthenticationResourcesManagementStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "ce8b9dd2cf254618f0b75c94beb7da867c87f3a6e761740f1157499476829980.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

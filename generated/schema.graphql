@@ -1,0 +1,158 @@
+enum MeasuringUnits {
+  COUNT
+  KILOGRAM
+  LITRE
+}
+
+type Product @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  imageURLs: [String!]!
+  measuringUnit: MeasuringUnits!
+  isQuantizationEnabled: Boolean!
+  quantizedStates: [QuantizedState!]
+  """if quantization is not enabled"""
+  pricePerUnit: Float
+  availableUnits: Int
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type QuantizedState @aws_api_key @aws_cognito_user_pools {
+  quantizedValue: Float!
+  price: Float!
+  availabilityCount: Int!
+}
+
+input QuantizedStateInput {
+  quantizedValue: Float!
+  price: Float!
+  availabilityCount: Int!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelProductConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Product]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelMeasuringUnitsFilterInput {
+  eq: MeasuringUnits
+  ne: MeasuringUnits
+}
+
+input ModelProductFilterInput {
+  id: ModelIDFilterInput
+  name: ModelStringFilterInput
+  description: ModelStringFilterInput
+  imageURLs: ModelStringFilterInput
+  measuringUnit: ModelMeasuringUnitsFilterInput
+  isQuantizationEnabled: ModelBooleanFilterInput
+  pricePerUnit: ModelFloatFilterInput
+  availableUnits: ModelIntFilterInput
+  and: [ModelProductFilterInput]
+  or: [ModelProductFilterInput]
+  not: ModelProductFilterInput
+}
+
+type Query {
+  getProduct(id: ID!): Product @aws_api_key @aws_cognito_user_pools
+  listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection @aws_api_key @aws_cognito_user_pools
+}
+
+input CreateProductInput {
+  id: ID
+  name: String!
+  description: String!
+  imageURLs: [String!]!
+  measuringUnit: MeasuringUnits!
+  isQuantizationEnabled: Boolean!
+  quantizedStates: [QuantizedStateInput!]
+  pricePerUnit: Float
+  availableUnits: Int
+}
+
+input UpdateProductInput {
+  id: ID!
+  name: String
+  description: String
+  imageURLs: [String!]
+  measuringUnit: MeasuringUnits
+  isQuantizationEnabled: Boolean
+  quantizedStates: [QuantizedStateInput!]
+  pricePerUnit: Float
+  availableUnits: Int
+}
+
+input DeleteProductInput {
+  id: ID!
+}
+
+type Mutation {
+  createProduct(input: CreateProductInput!): Product
+  updateProduct(input: UpdateProductInput!): Product
+  deleteProduct(input: DeleteProductInput!): Product
+}
+
+type Subscription {
+  onCreateProduct: Product @aws_subscribe(mutations: ["createProduct"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateProduct: Product @aws_subscribe(mutations: ["updateProduct"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteProduct: Product @aws_subscribe(mutations: ["deleteProduct"]) @aws_api_key @aws_cognito_user_pools
+}

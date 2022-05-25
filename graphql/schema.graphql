@@ -1,0 +1,37 @@
+enum MeasuringUnits {
+
+    COUNT
+    KILOGRAM
+    LITRE
+}
+
+type Product
+    @model
+    @auth(rules: [
+
+        { allow: owner, operations: [ create, read, update, delete ] }
+        { allow: private, operations: [ read ] }
+        { allow: public, operations: [ read ] }
+    ])
+{
+
+    id: ID!
+    name: String!
+    description: String!
+    imageURLs: [String!]!
+    measuringUnit: MeasuringUnits!
+    isQuantizationEnabled: Boolean!
+
+    quantizedStates: [QuantizedState!]
+
+    """if quantization is not enabled"""
+    pricePerUnit: Float
+    availableUnits: Int
+}
+
+type QuantizedState {
+
+    quantizedValue: Float!,
+    price: Float!,
+    availabilityCount: Int!
+}

@@ -1,0 +1,577 @@
+{
+ "Resources": {
+  "graphQLProductApiapiApiLogsRole6344B077": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole/Resource"
+   }
+  },
+  "graphQLProductApiapi87FC31AA": {
+   "Type": "AWS::AppSync::GraphQLApi",
+   "Properties": {
+    "AuthenticationType": "API_KEY",
+    "Name": "graphQLProductApi-api",
+    "AdditionalAuthenticationProviders": [
+     {
+      "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+      "UserPoolConfig": {
+       "AwsRegion": {
+        "Ref": "AWS::Region"
+       },
+       "UserPoolId": {
+        "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+       }
+      }
+     }
+    ],
+    "LogConfig": {
+     "CloudWatchLogsRoleArn": {
+      "Fn::GetAtt": [
+       "graphQLProductApiapiApiLogsRole6344B077",
+       "Arn"
+      ]
+     },
+     "FieldLogLevel": "ALL"
+    },
+    "XrayEnabled": false
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Resource"
+   }
+  },
+  "graphQLProductApiapiSchema227BE598": {
+   "Type": "AWS::AppSync::GraphQLSchema",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "Definition": "enum MeasuringUnits {\n  COUNT\n  KILOGRAM\n  LITRE\n}\n\ntype Product @aws_api_key @aws_cognito_user_pools {\n  id: ID!\n  name: String!\n  description: String!\n  imageURLs: [String!]!\n  measuringUnit: MeasuringUnits!\n  isQuantizationEnabled: Boolean!\n  quantizedStates: [QuantizedState!]\n  \"\"\"if quantization is not enabled\"\"\"\n  pricePerUnit: Float\n  availableUnits: Int\n  createdAt: AWSDateTime!\n  updatedAt: AWSDateTime!\n  owner: String\n}\n\ntype QuantizedState @aws_api_key @aws_cognito_user_pools {\n  quantizedValue: Float!\n  price: Float!\n  availabilityCount: Int!\n}\n\ninput QuantizedStateInput {\n  quantizedValue: Float!\n  price: Float!\n  availabilityCount: Int!\n}\n\nenum ModelSortDirection {\n  ASC\n  DESC\n}\n\ntype ModelProductConnection @aws_api_key @aws_cognito_user_pools {\n  items: [Product]\n  nextToken: String\n}\n\ninput ModelStringFilterInput {\n  ne: String\n  eq: String\n  le: String\n  lt: String\n  ge: String\n  gt: String\n  contains: String\n  notContains: String\n  between: [String]\n  beginsWith: String\n}\n\ninput ModelIDFilterInput {\n  ne: ID\n  eq: ID\n  le: ID\n  lt: ID\n  ge: ID\n  gt: ID\n  contains: ID\n  notContains: ID\n  between: [ID]\n  beginsWith: ID\n}\n\ninput ModelIntFilterInput {\n  ne: Int\n  eq: Int\n  le: Int\n  lt: Int\n  ge: Int\n  gt: Int\n  between: [Int]\n}\n\ninput ModelFloatFilterInput {\n  ne: Float\n  eq: Float\n  le: Float\n  lt: Float\n  ge: Float\n  gt: Float\n  between: [Float]\n}\n\ninput ModelBooleanFilterInput {\n  ne: Boolean\n  eq: Boolean\n}\n\ninput ModelMeasuringUnitsFilterInput {\n  eq: MeasuringUnits\n  ne: MeasuringUnits\n}\n\ninput ModelProductFilterInput {\n  id: ModelIDFilterInput\n  name: ModelStringFilterInput\n  description: ModelStringFilterInput\n  imageURLs: ModelStringFilterInput\n  measuringUnit: ModelMeasuringUnitsFilterInput\n  isQuantizationEnabled: ModelBooleanFilterInput\n  pricePerUnit: ModelFloatFilterInput\n  availableUnits: ModelIntFilterInput\n  and: [ModelProductFilterInput]\n  or: [ModelProductFilterInput]\n  not: ModelProductFilterInput\n}\n\ntype Query {\n  getProduct(id: ID!): Product @aws_api_key @aws_cognito_user_pools\n  listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection @aws_api_key @aws_cognito_user_pools\n}\n\ninput CreateProductInput {\n  id: ID\n  name: String!\n  description: String!\n  imageURLs: [String!]!\n  measuringUnit: MeasuringUnits!\n  isQuantizationEnabled: Boolean!\n  quantizedStates: [QuantizedStateInput!]\n  pricePerUnit: Float\n  availableUnits: Int\n}\n\ninput UpdateProductInput {\n  id: ID!\n  name: String\n  description: String\n  imageURLs: [String!]\n  measuringUnit: MeasuringUnits\n  isQuantizationEnabled: Boolean\n  quantizedStates: [QuantizedStateInput!]\n  pricePerUnit: Float\n  availableUnits: Int\n}\n\ninput DeleteProductInput {\n  id: ID!\n}\n\ntype Mutation {\n  createProduct(input: CreateProductInput!): Product\n  updateProduct(input: UpdateProductInput!): Product\n  deleteProduct(input: DeleteProductInput!): Product\n}\n\ntype Subscription {\n  onCreateProduct: Product @aws_subscribe(mutations: [\"createProduct\"]) @aws_api_key @aws_cognito_user_pools\n  onUpdateProduct: Product @aws_subscribe(mutations: [\"updateProduct\"]) @aws_api_key @aws_cognito_user_pools\n  onDeleteProduct: Product @aws_subscribe(mutations: [\"deleteProduct\"]) @aws_api_key @aws_cognito_user_pools\n}\n"
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Schema"
+   }
+  },
+  "graphQLProductApiapiDefaultApiKey761462B2": {
+   "Type": "AWS::AppSync::ApiKey",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "Expires": 1685048706
+   },
+   "DependsOn": [
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/DefaultApiKey"
+   }
+  },
+  "graphQLProductApiapiProductTableServiceRole6E2B2CD3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/Resource"
+   }
+  },
+  "graphQLProductApiapiProductTableServiceRoleDefaultPolicy5B388958": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ProductTableB8D4E9ED",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "graphQLProductApiapiProductTableServiceRoleDefaultPolicy5B388958",
+    "Roles": [
+     {
+      "Ref": "graphQLProductApiapiProductTableServiceRole6E2B2CD3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "graphQLProductApiapiProductTable93BFCAD1": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "Name": "ProductTable",
+    "Type": "AMAZON_DYNAMODB",
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Ref": "ProductTableB8D4E9ED"
+     }
+    },
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapiProductTableServiceRole6E2B2CD3",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/Resource"
+   }
+  },
+  "graphQLProductApiapiNONE559FC471": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "Name": "NONE",
+    "Type": "NONE"
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE/Resource"
+   }
+  },
+  "ProductTableB8D4E9ED": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "KeySchema": [
+     {
+      "AttributeName": "id",
+      "KeyType": "HASH"
+     }
+    ],
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "id",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": false
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/Resource"
+   }
+  },
+  "QuerygetProductresolver6058111C": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "FieldName": "getProduct",
+    "TypeName": "Query",
+    "DataSourceName": "ProductTable",
+    "Kind": "UNIT",
+    "RequestMappingTemplate": "{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"GetItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": $util.dynamodb.toDynamoDBJson($ctx.args.id)\n} #end\n}",
+    "ResponseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+   },
+   "DependsOn": [
+    "graphQLProductApiapiProductTable93BFCAD1",
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource"
+   }
+  },
+  "QuerylistProductsresolverD617A1F1": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "FieldName": "listProducts",
+    "TypeName": "Query",
+    "DataSourceName": "ProductTable",
+    "Kind": "UNIT",
+    "RequestMappingTemplate": "#set( $limit = $util.defaultIfNull($context.args.limit, 100) )\n#set( $ListRequest = {\n  \"version\": \"2018-05-29\",\n  \"limit\": $limit\n} )\n#if( $context.args.nextToken )\n  #set( $ListRequest.nextToken = $context.args.nextToken )\n#end\n#if( $context.args.filter )\n  #set( $ListRequest.filter = $util.parseJson(\"$util.transform.toDynamoDBFilterExpression($ctx.args.filter)\") )\n#end\n#if( !$util.isNull($modelQueryExpression)\n                        && !$util.isNullOrEmpty($modelQueryExpression.expression) )\n  $util.qr($ListRequest.put(\"operation\", \"Query\"))\n  $util.qr($ListRequest.put(\"query\", $modelQueryExpression))\n  #if( !$util.isNull($ctx.args.sortDirection) && $ctx.args.sortDirection == \"DESC\" )\n    #set( $ListRequest.scanIndexForward = false )\n  #else\n    #set( $ListRequest.scanIndexForward = true )\n  #end\n#else\n  $util.qr($ListRequest.put(\"operation\", \"Scan\"))\n#end\n$util.toJson($ListRequest)",
+    "ResponseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+   },
+   "DependsOn": [
+    "graphQLProductApiapiProductTable93BFCAD1",
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource"
+   }
+  },
+  "MutationcreateProductresolver0DC8A331": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "FieldName": "createProduct",
+    "TypeName": "Mutation",
+    "DataSourceName": "ProductTable",
+    "Kind": "UNIT",
+    "RequestMappingTemplate": "## [Start] Set default values. **\n$util.qr($context.args.input.put(\"id\", $util.defaultIfNull($ctx.args.input.id, $util.autoId())))\n#set( $createdAt = $util.time.nowISO8601() )\n## Automatically set the createdAt timestamp. **\n$util.qr($context.args.input.put(\"createdAt\", $util.defaultIfNull($ctx.args.input.createdAt, $createdAt)))\n## Automatically set the updatedAt timestamp. **\n$util.qr($context.args.input.put(\"updatedAt\", $util.defaultIfNull($ctx.args.input.updatedAt, $createdAt)))\n## [End] Set default values. **\n## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  ## No Dynamic Group Authorization Rules **\n\n\n  ## [Start] Owner Authorization Checks **\n  #set( $isOwnerAuthorized = false )\n  ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n  #set( $allowedOwners0 = $util.defaultIfNull($ctx.args.input.owner, null) )\n  #set( $identityValue = $util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")) )\n  #if( $util.isList($allowedOwners0) )\n    #foreach( $allowedOwner in $allowedOwners0 )\n      #if( $allowedOwner == $identityValue )\n        #set( $isOwnerAuthorized = true )\n      #end\n    #end\n  #end\n  #if( $util.isString($allowedOwners0) )\n    #if( $allowedOwners0 == $identityValue )\n      #set( $isOwnerAuthorized = true )\n    #end\n  #end\n  #if( $util.isNull($allowedOwners0) && (! $ctx.args.input.containsKey(\"owner\")) )\n    $util.qr($ctx.args.input.put(\"owner\", $identityValue))\n    #set( $isOwnerAuthorized = true )\n  #end\n  ## [End] Owner Authorization Checks **\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || $isDynamicGroupAuthorized == true || $isOwnerAuthorized == true) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n## [Start] Prepare DynamoDB PutItem Request. **\n$util.qr($context.args.input.put(\"__typename\", \"Product\"))\n#if( $modelObjectKey )\n  #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n  #foreach( $entry in $modelObjectKey.entrySet() )\n    #if( $velocityCount == 1 )\n      $util.qr($condition.put(\"expression\", \"attribute_not_exists(#keyCondition$velocityCount)\"))\n    #else\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_not_exists(#keyCondition$velocityCount)\"))\n    #end\n    $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n  #end\n#else\n  #set( $condition = {\n  \"expression\": \"attribute_not_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n#end\n#if( $context.args.condition )\n  #set( $condition.expressionValues = {} )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"PutItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\":   $util.dynamodb.toDynamoDBJson($ctx.args.input.id)\n} #end,\n  \"attributeValues\": $util.dynamodb.toMapValuesJson($context.args.input),\n  \"condition\": $util.toJson($condition)\n}\n## [End] Prepare DynamoDB PutItem Request. **",
+    "ResponseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+   },
+   "DependsOn": [
+    "graphQLProductApiapiProductTable93BFCAD1",
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource"
+   }
+  },
+  "MutationupdateProductresolver61B5F41A": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "FieldName": "updateProduct",
+    "TypeName": "Mutation",
+    "DataSourceName": "ProductTable",
+    "Kind": "UNIT",
+    "RequestMappingTemplate": "## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  #if( ! $isStaticGroupAuthorized )\n    ## No dynamic group authorization rules **\n\n\n    ## [Start] Owner Authorization Checks **\n    #set( $ownerAuthExpressions = [] )\n    #set( $ownerAuthExpressionValues = {} )\n    #set( $ownerAuthExpressionNames = {} )\n    ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n    $util.qr($ownerAuthExpressions.add(\"#owner0 = :identity0\"))\n    $util.qr($ownerAuthExpressionNames.put(\"#owner0\", \"owner\"))\n    $util.qr($ownerAuthExpressionValues.put(\":identity0\", $util.dynamodb.toDynamoDB($util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")))))\n    ## [End] Owner Authorization Checks **\n\n\n    ## [Start] Collect Auth Condition **\n    #set( $authCondition = $util.defaultIfNull($authCondition, {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n}) )\n    #set( $totalAuthExpression = \"\" )\n    ## Add dynamic group auth conditions if they exist **\n    #if( $groupAuthExpressions )\n      #foreach( $authExpr in $groupAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $groupAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($groupAuthExpressionNames))\n    #end\n    #if( $groupAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($groupAuthExpressionValues))\n    #end\n    ## Add owner auth conditions if they exist **\n    #if( $totalAuthExpression != \"\" && $ownerAuthExpressions && $ownerAuthExpressions.size() > 0 )\n      #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n    #end\n    #if( $ownerAuthExpressions )\n      #foreach( $authExpr in $ownerAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $ownerAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($ownerAuthExpressionNames))\n    #end\n    #if( $ownerAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($ownerAuthExpressionValues))\n    #end\n    ## Set final expression if it has changed. **\n    #if( $totalAuthExpression != \"\" )\n      #if( $util.isNullOrEmpty($authCondition.expression) )\n        #set( $authCondition.expression = \"($totalAuthExpression)\" )\n      #else\n        #set( $authCondition.expression = \"$authCondition.expression AND ($totalAuthExpression)\" )\n      #end\n    #end\n    ## [End] Collect Auth Condition **\n  #end\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || ($totalAuthExpression != \"\")) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n#set( $optionalNonNullableFields = [\"name\", \"description\", \"imageURLs\", \"measuringUnit\", \"isQuantizationEnabled\"] )\n#foreach( $field in $optionalNonNullableFields )\n  #if( $context.arguments.input.keySet().contains($field) && $util.isNull($context.args.input.get($field)) )\n$util.error(\"An argument you marked as Non-Null is set to Null in the query or the body of your request.\")\n  #end\n#end\n#if( $authCondition && $authCondition.expression != \"\" )\n  #set( $condition = $authCondition )\n  #if( $modelObjectKey )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#id)\"))\n    $util.qr($condition.expressionNames.put(\"#id\", \"id\"))\n  #end\n#else\n  #if( $modelObjectKey )\n    #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      #if( $velocityCount == 1 )\n        $util.qr($condition.put(\"expression\", \"attribute_exists(#keyCondition$velocityCount)\"))\n      #else\n        $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      #end\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    #set( $condition = {\n  \"expression\": \"attribute_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n  #end\n#end\n## Automatically set the updatedAt timestamp. **\n$util.qr($context.args.input.put(\"updatedAt\", $util.defaultIfNull($ctx.args.input.updatedAt, $util.time.nowISO8601())))\n$util.qr($context.args.input.put(\"__typename\", \"Product\"))\n## Update condition if type is @versioned **\n#if( $versionedCondition )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $versionedCondition.expression\"))\n  $util.qr($condition.expressionNames.putAll($versionedCondition.expressionNames))\n  $util.qr($condition.expressionValues.putAll($versionedCondition.expressionValues))\n#end\n#if( $context.args.condition )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n#set( $expNames = {} )\n#set( $expValues = {} )\n#set( $expSet = {} )\n#set( $expAdd = {} )\n#set( $expRemove = [] )\n#if( $modelObjectKey )\n  #set( $keyFields = [] )\n  #foreach( $entry in $modelObjectKey.entrySet() )\n    $util.qr($keyFields.add(\"$entry.key\"))\n  #end\n#else\n  #set( $keyFields = [\"id\"] )\n#end\n#foreach( $entry in $util.map.copyAndRemoveAllKeys($context.args.input, $keyFields).entrySet() )\n  #if( !$util.isNull($dynamodbNameOverrideMap) && $dynamodbNameOverrideMap.containsKey(\"$entry.key\") )\n    #set( $entryKeyAttributeName = $dynamodbNameOverrideMap.get(\"$entry.key\") )\n  #else\n    #set( $entryKeyAttributeName = $entry.key )\n  #end\n  #if( $util.isNull($entry.value) )\n    #set( $discard = $expRemove.add(\"#$entryKeyAttributeName\") )\n    $util.qr($expNames.put(\"#$entryKeyAttributeName\", \"$entry.key\"))\n  #else\n    $util.qr($expSet.put(\"#$entryKeyAttributeName\", \":$entryKeyAttributeName\"))\n    $util.qr($expNames.put(\"#$entryKeyAttributeName\", \"$entry.key\"))\n    $util.qr($expValues.put(\":$entryKeyAttributeName\", $util.dynamodb.toDynamoDB($entry.value)))\n  #end\n#end\n#set( $expression = \"\" )\n#if( !$expSet.isEmpty() )\n  #set( $expression = \"SET\" )\n  #foreach( $entry in $expSet.entrySet() )\n    #set( $expression = \"$expression $entry.key = $entry.value\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#if( !$expAdd.isEmpty() )\n  #set( $expression = \"$expression ADD\" )\n  #foreach( $entry in $expAdd.entrySet() )\n    #set( $expression = \"$expression $entry.key $entry.value\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#if( !$expRemove.isEmpty() )\n  #set( $expression = \"$expression REMOVE\" )\n  #foreach( $entry in $expRemove )\n    #set( $expression = \"$expression $entry\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#set( $update = {} )\n$util.qr($update.put(\"expression\", \"$expression\"))\n#if( !$expNames.isEmpty() )\n  $util.qr($update.put(\"expressionNames\", $expNames))\n#end\n#if( !$expValues.isEmpty() )\n  $util.qr($update.put(\"expressionValues\", $expValues))\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"UpdateItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": {\n      \"S\": $util.toJson($context.args.input.id)\n  }\n} #end,\n  \"update\": $util.toJson($update),\n  \"condition\": $util.toJson($condition)\n}",
+    "ResponseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+   },
+   "DependsOn": [
+    "graphQLProductApiapiProductTable93BFCAD1",
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource"
+   }
+  },
+  "MutationdeleteProductresolver5949E36F": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "graphQLProductApiapi87FC31AA",
+      "ApiId"
+     ]
+    },
+    "FieldName": "deleteProduct",
+    "TypeName": "Mutation",
+    "DataSourceName": "ProductTable",
+    "Kind": "UNIT",
+    "RequestMappingTemplate": "## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  #if( ! $isStaticGroupAuthorized )\n    ## No dynamic group authorization rules **\n\n\n    ## [Start] Owner Authorization Checks **\n    #set( $ownerAuthExpressions = [] )\n    #set( $ownerAuthExpressionValues = {} )\n    #set( $ownerAuthExpressionNames = {} )\n    ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n    $util.qr($ownerAuthExpressions.add(\"#owner0 = :identity0\"))\n    $util.qr($ownerAuthExpressionNames.put(\"#owner0\", \"owner\"))\n    $util.qr($ownerAuthExpressionValues.put(\":identity0\", $util.dynamodb.toDynamoDB($util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")))))\n    ## [End] Owner Authorization Checks **\n\n\n    ## [Start] Collect Auth Condition **\n    #set( $authCondition = $util.defaultIfNull($authCondition, {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n}) )\n    #set( $totalAuthExpression = \"\" )\n    ## Add dynamic group auth conditions if they exist **\n    #if( $groupAuthExpressions )\n      #foreach( $authExpr in $groupAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $groupAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($groupAuthExpressionNames))\n    #end\n    #if( $groupAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($groupAuthExpressionValues))\n    #end\n    ## Add owner auth conditions if they exist **\n    #if( $totalAuthExpression != \"\" && $ownerAuthExpressions && $ownerAuthExpressions.size() > 0 )\n      #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n    #end\n    #if( $ownerAuthExpressions )\n      #foreach( $authExpr in $ownerAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $ownerAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($ownerAuthExpressionNames))\n    #end\n    #if( $ownerAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($ownerAuthExpressionValues))\n    #end\n    ## Set final expression if it has changed. **\n    #if( $totalAuthExpression != \"\" )\n      #if( $util.isNullOrEmpty($authCondition.expression) )\n        #set( $authCondition.expression = \"($totalAuthExpression)\" )\n      #else\n        #set( $authCondition.expression = \"$authCondition.expression AND ($totalAuthExpression)\" )\n      #end\n    #end\n    ## [End] Collect Auth Condition **\n  #end\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || ($totalAuthExpression != \"\")) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n#if( $authCondition )\n  #set( $condition = $authCondition )\n  #if( $modelObjectKey )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#id)\"))\n    $util.qr($condition.expressionNames.put(\"#id\", \"id\"))\n  #end\n#else\n  #if( $modelObjectKey )\n    #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      #if( $velocityCount == 1 )\n        $util.qr($condition.put(\"expression\", \"attribute_exists(#keyCondition$velocityCount)\"))\n      #else\n        $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      #end\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    #set( $condition = {\n  \"expression\": \"attribute_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n  #end\n#end\n#if( $versionedCondition )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $versionedCondition.expression\"))\n  $util.qr($condition.expressionNames.putAll($versionedCondition.expressionNames))\n  #set( $expressionValues = $util.defaultIfNull($condition.expressionValues, {}) )\n  $util.qr($expressionValues.putAll($versionedCondition.expressionValues))\n  #set( $condition.expressionValues = $expressionValues )\n#end\n#if( $context.args.condition )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  #set( $conditionExpressionValues = $util.defaultIfNull($condition.expressionValues, {}) )\n  $util.qr($conditionExpressionValues.putAll($conditionFilterExpressions.expressionValues))\n  #set( $condition.expressionValues = $conditionExpressionValues )\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"DeleteItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": $util.dynamodb.toDynamoDBJson($ctx.args.input.id)\n} #end,\n  \"condition\": $util.toJson($condition)\n}",
+    "ResponseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+   },
+   "DependsOn": [
+    "graphQLProductApiapiProductTable93BFCAD1",
+    "graphQLProductApiapiSchema227BE598"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01Py27DIBD8Ft/xJrbSnlvFUg6tojbuvVoDlUkwEENSWYh/L2C39Wkey+4MNfh6B1WB37ak7FJK0YE/cus4ax3SC4mDTy9wAH/SkpP9l8r4pqWgU5IzCwSNsZOi4KN3GNH076/PRpB/1dKeD5iM6L/wvNygw1bfRjpf5lbLOx8DYZPCQbPY5QO7OTaTEEh6tF745XutmHBCq0DqB9iWKE2PsC2elq9tEi4ll6HPza4y9WxyYtOtGh214iv51y4QpRmHs93cq0eoYlhxtkKU4005MXA4zfgDv1lc/lsBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Outputs": {
+  "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "graphQLProductApiapi87FC31AA",
+     "GraphQLUrl"
+    ]
+   }
+  }
+ }
+}

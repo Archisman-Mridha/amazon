@@ -62,12 +62,15 @@
         "url-loader": "^3.0.0"
     },
     "dependencies": {
+        "@aws-cdk/aws-amplify-alpha": "2.25.0-alpha.0",
+        "@aws-cdk/aws-appsync-alpha": "2.25.0-alpha.0",
         "@chakra-ui/react": "^1.8.8",
         "@emotion/react": "11.0.0",
         "@emotion/styled": "^11",
         "@nrwl/nx-cloud": "^14.0.3",
         "@reduxjs/toolkit": "^1.8.1",
         "aws-cdk-lib": "^2.24.1",
+        "cdk-appsync-transformer": "2.0.0-alpha.0",
         "constructs": "^10.0.0",
         "core-js": "^3.6.5",
         "framer-motion": "^6",

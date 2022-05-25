@@ -1,17 +1,26 @@
 import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib"
-import { CfnIdentityPool, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito"
+import { AccountRecovery, CfnIdentityPool, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito"
 import { Construct } from "constructs"
 
-export class MicrofrontendDeploymentStack extends Stack {
+export class AuthenticationResourcesManagementStack extends Stack {
+
+    public userPool: UserPool
+    public userPoolClient: UserPoolClient
+    public identityPool: CfnIdentityPool
+
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props)
 
         //* used for managing authentication workflow
 
-        const userPool= new UserPool(this, "userpool", {
+        this.userPool= new UserPool(this, "userpool", {
 
             selfSignUpEnabled: true,
             removalPolicy: RemovalPolicy.DESTROY,
+            accountRecovery: AccountRecovery.PHONE_AND_EMAIL,
+            autoVerify: { email: true, phone: true },
+
+            signInAliases: { email: true, phone: true },
 
             standardAttributes: {
 
@@ -21,24 +30,23 @@ export class MicrofrontendDeploymentStack extends Stack {
                 fullname: { mutable: true, required: true }
             },
 
-            signInAliases: { email: true, phone: true },
-
-            autoVerify: { email: true, phone: true }
+            customAttributes: { }
         })
 
-        const userPoolClient= new UserPoolClient(this, "userpool-client", {
+        this.userPoolClient= new UserPoolClient(this, "userpool-client", {
 
-            userPool,
-            accessTokenValidity: Duration.days(30)
+            userPool: this.userPool,
+            accessTokenValidity: Duration.days(1),
+            refreshTokenValidity: Duration.days(365)
         })
 
-        new CfnIdentityPool(this, "identity-pool", {
+        this.identityPool= new CfnIdentityPool(this, "identity-pool", {
 
             allowUnauthenticatedIdentities: false,
             cognitoIdentityProviders: [{
 
-                clientId: userPoolClient.userPoolClientId,
-                providerName: userPool.userPoolProviderName
+                clientId: this.userPoolClient.userPoolClientId,
+                providerName: this.userPool.userPoolProviderName
             }]
         })
     }

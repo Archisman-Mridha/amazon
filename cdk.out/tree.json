@@ -1,0 +1,1834 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.6"
+        }
+      },
+      "MicrofrontendDeploymentStack": {
+        "id": "MicrofrontendDeploymentStack",
+        "path": "MicrofrontendDeploymentStack",
+        "children": {
+          "hostingBucket": {
+            "id": "hostingBucket",
+            "path": "MicrofrontendDeploymentStack/hostingBucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "MicrofrontendDeploymentStack/hostingBucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketEncryption": {
+                      "serverSideEncryptionConfiguration": [
+                        {
+                          "serverSideEncryptionByDefault": {
+                            "sseAlgorithm": "AES256"
+                          }
+                        }
+                      ]
+                    },
+                    "corsConfiguration": {
+                      "corsRules": [
+                        {
+                          "maxAge": 3000,
+                          "allowedHeaders": [
+                            "Authorization",
+                            "Content-Length"
+                          ],
+                          "allowedMethods": [
+                            "GET"
+                          ],
+                          "allowedOrigins": [
+                            "*"
+                          ]
+                        }
+                      ]
+                    },
+                    "tags": [
+                      {
+                        "key": "aws-cdk:auto-delete-objects",
+                        "value": "true"
+                      },
+                      {
+                        "key": "aws-cdk:cr-owned:b6892e92",
+                        "value": "true"
+                      }
+                    ],
+                    "versioningConfiguration": {
+                      "status": "Enabled"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.24.1"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "MicrofrontendDeploymentStack/hostingBucket/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "MicrofrontendDeploymentStack/hostingBucket/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "hostingBucketA91A61FE"
+                        },
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "s3:DeleteObject*",
+                                "s3:GetBucket*",
+                                "s3:List*"
+                              ],
+                              "Effect": "Allow",
+                              "Principal": {
+                                "AWS": {
+                                  "Fn::GetAtt": [
+                                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                                    "Arn"
+                                  ]
+                                }
+                              },
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "hostingBucketA91A61FE",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "hostingBucketA91A61FE",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "Action": [
+                                "s3:GetBucket*",
+                                "s3:GetObject*",
+                                "s3:List*"
+                              ],
+                              "Effect": "Allow",
+                              "Principal": {
+                                "CanonicalUser": {
+                                  "Fn::GetAtt": [
+                                    "oai7A77E975",
+                                    "S3CanonicalUserId"
+                                  ]
+                                }
+                              },
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "hostingBucketA91A61FE",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "hostingBucketA91A61FE",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "Action": "s3:GetObject",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "CanonicalUser": {
+                                  "Fn::GetAtt": [
+                                    "oai7A77E975",
+                                    "S3CanonicalUserId"
+                                  ]
+                                }
+                              },
+                              "Resource": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "hostingBucketA91A61FE",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/*"
+                                  ]
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
+                  "version": "2.24.1"
+                }
+              },
+              "AutoDeleteObjectsCustomResource": {
+                "id": "AutoDeleteObjectsCustomResource",
+                "path": "MicrofrontendDeploymentStack/hostingBucket/AutoDeleteObjectsCustomResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "MicrofrontendDeploymentStack/hostingBucket/AutoDeleteObjectsCustomResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.24.1"
+            }
+          },
+          "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
+            "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.24.1"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.24.1"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.24.1"
+            }
+          },
+          "microfrontendsS3Deployment": {
+            "id": "microfrontendsS3Deployment",
+            "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment",
+            "children": {
+              "AwsCliLayer": {
+                "id": "AwsCliLayer",
+                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer",
+                "children": {
+                  "Code": {
+                    "id": "Code",
+                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.24.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                      "aws:cdk:cloudformation:props": {
+                        "content": {
+                          "s3Bucket": {
+                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                          },
+                          "s3Key": "e6b3c8169ff937ea363b0bb4d13b24b0a38c958c42318f72066e3e59f0148c2c.zip"
+                        },
+                        "description": "/opt/awscli/aws"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.lambda_layer_awscli.AwsCliLayer",
+                  "version": "2.24.1"
+                }
+              },
+              "CustomResourceHandler": {
+                "id": "CustomResourceHandler",
+                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResourceHandler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.24.1"
+                }
+              },
+              "Asset1": {
+                "id": "Asset1",
+                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.24.1"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.24.1"
+                }
+              },
+              "CustomResource": {
+                "id": "CustomResource",
+                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3_deployment.BucketDeployment",
+              "version": "2.24.1"
+            }
+          },
+          "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C": {
+            "id": "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C",
+            "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.24.1"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:GetBucket*",
+                                    "s3:GetObject*",
+                                    "s3:List*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                                          }
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Action": [
+                                    "s3:Abort*",
+                                    "s3:DeleteObject*",
+                                    "s3:GetBucket*",
+                                    "s3:GetObject*",
+                                    "s3:List*",
+                                    "s3:PutObject",
+                                    "s3:PutObjectLegalHold",
+                                    "s3:PutObjectRetention",
+                                    "s3:PutObjectTagging",
+                                    "s3:PutObjectVersionTagging"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "hostingBucketA91A61FE",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "hostingBucketA91A61FE",
+                                              "Arn"
+                                            ]
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+                            "roles": [
+                              {
+                                "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.24.1"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.24.1"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.24.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "index.handler",
+                    "layers": [
+                      {
+                        "Ref": "microfrontendsS3DeploymentAwsCliLayerD738F6A3"
+                      }
+                    ],
+                    "runtime": "python3.7",
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.24.1"
+            }
+          },
+          "oai": {
+            "id": "oai",
+            "path": "MicrofrontendDeploymentStack/oai",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "MicrofrontendDeploymentStack/oai/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+                  "aws:cdk:cloudformation:props": {
+                    "cloudFrontOriginAccessIdentityConfig": {
+                      "comment": "Allows CloudFront to reach the bucket"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnCloudFrontOriginAccessIdentity",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cloudfront.OriginAccessIdentity",
+              "version": "2.24.1"
+            }
+          },
+          "cloudFrontDistribution": {
+            "id": "cloudFrontDistribution",
+            "path": "MicrofrontendDeploymentStack/cloudFrontDistribution",
+            "children": {
+              "Origin1": {
+                "id": "Origin1",
+                "path": "MicrofrontendDeploymentStack/cloudFrontDistribution/Origin1",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.1.6"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "MicrofrontendDeploymentStack/cloudFrontDistribution/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
+                  "aws:cdk:cloudformation:props": {
+                    "distributionConfig": {
+                      "enabled": true,
+                      "origins": [
+                        {
+                          "domainName": {
+                            "Fn::GetAtt": [
+                              "hostingBucketA91A61FE",
+                              "RegionalDomainName"
+                            ]
+                          },
+                          "id": "MicrofrontendDeploymentStackcloudFrontDistributionOrigin16E890A57",
+                          "s3OriginConfig": {
+                            "originAccessIdentity": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "origin-access-identity/cloudfront/",
+                                  {
+                                    "Ref": "oai7A77E975"
+                                  }
+                                ]
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "defaultCacheBehavior": {
+                        "pathPattern": "*",
+                        "targetOriginId": "MicrofrontendDeploymentStackcloudFrontDistributionOrigin16E890A57",
+                        "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+                        "compress": true,
+                        "viewerProtocolPolicy": "allow-all",
+                        "lambdaFunctionAssociations": []
+                      },
+                      "defaultRootObject": "container/index.html",
+                      "httpVersion": "http2",
+                      "ipv6Enabled": true
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnDistribution",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cloudfront.Distribution",
+              "version": "2.24.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "MicrofrontendDeploymentStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "MicrofrontendDeploymentStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.24.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "MicrofrontendDeploymentStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.6"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.24.1"
+        }
+      },
+      "AuthenticationResourcesManagementStack": {
+        "id": "AuthenticationResourcesManagementStack",
+        "path": "AuthenticationResourcesManagementStack",
+        "children": {
+          "userpool": {
+            "id": "userpool",
+            "path": "AuthenticationResourcesManagementStack/userpool",
+            "children": {
+              "smsRole": {
+                "id": "smsRole",
+                "path": "AuthenticationResourcesManagementStack/userpool/smsRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AuthenticationResourcesManagementStack/userpool/smsRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Condition": {
+                                "StringEquals": {
+                                  "sts:ExternalId": "AuthenticationResourcesManagementStackuserpool83FAD804"
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "cognito-idp.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policies": [
+                          {
+                            "policyName": "sns-publish",
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sns:Publish",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.24.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AuthenticationResourcesManagementStack/userpool/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::UserPool",
+                  "aws:cdk:cloudformation:props": {
+                    "adminCreateUserConfig": {
+                      "allowAdminCreateUserOnly": false
+                    },
+                    "autoVerifiedAttributes": [
+                      "email",
+                      "phone_number"
+                    ],
+                    "emailVerificationMessage": "The verification code to your new account is {####}",
+                    "emailVerificationSubject": "Verify your new account",
+                    "schema": [
+                      {
+                        "name": "email",
+                        "mutable": true,
+                        "required": true
+                      },
+                      {
+                        "name": "phone_number",
+                        "mutable": true,
+                        "required": true
+                      },
+                      {
+                        "name": "address",
+                        "mutable": true,
+                        "required": true
+                      },
+                      {
+                        "name": "name",
+                        "mutable": true,
+                        "required": true
+                      }
+                    ],
+                    "smsConfiguration": {
+                      "externalId": "AuthenticationResourcesManagementStackuserpool83FAD804",
+                      "snsCallerArn": {
+                        "Fn::GetAtt": [
+                          "userpoolsmsRole9F6DAAF2",
+                          "Arn"
+                        ]
+                      }
+                    },
+                    "smsVerificationMessage": "The verification code to your new account is {####}",
+                    "usernameAttributes": [
+                      "email",
+                      "phone_number"
+                    ],
+                    "verificationMessageTemplate": {
+                      "defaultEmailOption": "CONFIRM_WITH_CODE",
+                      "emailMessage": "The verification code to your new account is {####}",
+                      "emailSubject": "Verify your new account",
+                      "smsMessage": "The verification code to your new account is {####}"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnUserPool",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cognito.UserPool",
+              "version": "2.24.1"
+            }
+          },
+          "userpool-client": {
+            "id": "userpool-client",
+            "path": "AuthenticationResourcesManagementStack/userpool-client",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "AuthenticationResourcesManagementStack/userpool-client/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolClient",
+                  "aws:cdk:cloudformation:props": {
+                    "userPoolId": {
+                      "Ref": "userpool0AC4AA96"
+                    },
+                    "accessTokenValidity": 1440,
+                    "allowedOAuthFlows": [
+                      "implicit",
+                      "code"
+                    ],
+                    "allowedOAuthFlowsUserPoolClient": true,
+                    "allowedOAuthScopes": [
+                      "profile",
+                      "phone",
+                      "email",
+                      "openid",
+                      "aws.cognito.signin.user.admin"
+                    ],
+                    "callbackUrLs": [
+                      "https://example.com"
+                    ],
+                    "refreshTokenValidity": 525600,
+                    "supportedIdentityProviders": [
+                      "COGNITO"
+                    ],
+                    "tokenValidityUnits": {
+                      "accessToken": "minutes",
+                      "refreshToken": "minutes"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolClient",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cognito.UserPoolClient",
+              "version": "2.24.1"
+            }
+          },
+          "identity-pool": {
+            "id": "identity-pool",
+            "path": "AuthenticationResourcesManagementStack/identity-pool",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::Cognito::IdentityPool",
+              "aws:cdk:cloudformation:props": {
+                "allowUnauthenticatedIdentities": false,
+                "cognitoIdentityProviders": [
+                  {
+                    "clientId": {
+                      "Ref": "userpoolclientDA356A8E"
+                    },
+                    "providerName": {
+                      "Fn::GetAtt": [
+                        "userpool0AC4AA96",
+                        "ProviderName"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cognito.CfnIdentityPool",
+              "version": "2.24.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AuthenticationResourcesManagementStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AuthenticationResourcesManagementStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.24.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AuthenticationResourcesManagementStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.6"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "AuthenticationResourcesManagementStack/Exports",
+            "children": {
+              "Output{\"Ref\":\"userpool0AC4AA96\"}": {
+                "id": "Output{\"Ref\":\"userpool0AC4AA96\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpool0AC4AA96\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.24.1"
+                }
+              },
+              "Output{\"Ref\":\"identitypool\"}": {
+                "id": "Output{\"Ref\":\"identitypool\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"identitypool\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.24.1"
+                }
+              },
+              "Output{\"Ref\":\"userpoolclientDA356A8E\"}": {
+                "id": "Output{\"Ref\":\"userpoolclientDA356A8E\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpoolclientDA356A8E\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.6"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.24.1"
+        }
+      },
+      "AppsyncStack": {
+        "id": "AppsyncStack",
+        "path": "AppsyncStack",
+        "children": {
+          "graphQLProductApi": {
+            "id": "graphQLProductApi",
+            "path": "AppsyncStack/graphQLProductApi",
+            "children": {
+              "appsync-nested-stack": {
+                "id": "appsync-nested-stack",
+                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack",
+                "children": {
+                  "graphQLProductApi-api": {
+                    "id": "graphQLProductApi-api",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api",
+                    "children": {
+                      "ApiLogsRole": {
+                        "id": "ApiLogsRole",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "appsync.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.24.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLApi",
+                          "aws:cdk:cloudformation:props": {
+                            "authenticationType": "API_KEY",
+                            "name": "graphQLProductApi-api",
+                            "additionalAuthenticationProviders": [
+                              {
+                                "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                                "userPoolConfig": {
+                                  "userPoolId": {
+                                    "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+                                  },
+                                  "awsRegion": {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  "defaultAction": "ALLOW"
+                                }
+                              }
+                            ],
+                            "logConfig": {
+                              "cloudWatchLogsRoleArn": {
+                                "Fn::GetAtt": [
+                                  "graphQLProductApiapiApiLogsRole6344B077",
+                                  "Arn"
+                                ]
+                              },
+                              "fieldLogLevel": "ALL"
+                            },
+                            "xrayEnabled": false
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLApi",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "Schema": {
+                        "id": "Schema",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Schema",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLSchema",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "definition": "enum MeasuringUnits {\n  COUNT\n  KILOGRAM\n  LITRE\n}\n\ntype Product @aws_api_key @aws_cognito_user_pools {\n  id: ID!\n  name: String!\n  description: String!\n  imageURLs: [String!]!\n  measuringUnit: MeasuringUnits!\n  isQuantizationEnabled: Boolean!\n  quantizedStates: [QuantizedState!]\n  \"\"\"if quantization is not enabled\"\"\"\n  pricePerUnit: Float\n  availableUnits: Int\n  createdAt: AWSDateTime!\n  updatedAt: AWSDateTime!\n  owner: String\n}\n\ntype QuantizedState @aws_api_key @aws_cognito_user_pools {\n  quantizedValue: Float!\n  price: Float!\n  availabilityCount: Int!\n}\n\ninput QuantizedStateInput {\n  quantizedValue: Float!\n  price: Float!\n  availabilityCount: Int!\n}\n\nenum ModelSortDirection {\n  ASC\n  DESC\n}\n\ntype ModelProductConnection @aws_api_key @aws_cognito_user_pools {\n  items: [Product]\n  nextToken: String\n}\n\ninput ModelStringFilterInput {\n  ne: String\n  eq: String\n  le: String\n  lt: String\n  ge: String\n  gt: String\n  contains: String\n  notContains: String\n  between: [String]\n  beginsWith: String\n}\n\ninput ModelIDFilterInput {\n  ne: ID\n  eq: ID\n  le: ID\n  lt: ID\n  ge: ID\n  gt: ID\n  contains: ID\n  notContains: ID\n  between: [ID]\n  beginsWith: ID\n}\n\ninput ModelIntFilterInput {\n  ne: Int\n  eq: Int\n  le: Int\n  lt: Int\n  ge: Int\n  gt: Int\n  between: [Int]\n}\n\ninput ModelFloatFilterInput {\n  ne: Float\n  eq: Float\n  le: Float\n  lt: Float\n  ge: Float\n  gt: Float\n  between: [Float]\n}\n\ninput ModelBooleanFilterInput {\n  ne: Boolean\n  eq: Boolean\n}\n\ninput ModelMeasuringUnitsFilterInput {\n  eq: MeasuringUnits\n  ne: MeasuringUnits\n}\n\ninput ModelProductFilterInput {\n  id: ModelIDFilterInput\n  name: ModelStringFilterInput\n  description: ModelStringFilterInput\n  imageURLs: ModelStringFilterInput\n  measuringUnit: ModelMeasuringUnitsFilterInput\n  isQuantizationEnabled: ModelBooleanFilterInput\n  pricePerUnit: ModelFloatFilterInput\n  availableUnits: ModelIntFilterInput\n  and: [ModelProductFilterInput]\n  or: [ModelProductFilterInput]\n  not: ModelProductFilterInput\n}\n\ntype Query {\n  getProduct(id: ID!): Product @aws_api_key @aws_cognito_user_pools\n  listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection @aws_api_key @aws_cognito_user_pools\n}\n\ninput CreateProductInput {\n  id: ID\n  name: String!\n  description: String!\n  imageURLs: [String!]!\n  measuringUnit: MeasuringUnits!\n  isQuantizationEnabled: Boolean!\n  quantizedStates: [QuantizedStateInput!]\n  pricePerUnit: Float\n  availableUnits: Int\n}\n\ninput UpdateProductInput {\n  id: ID!\n  name: String\n  description: String\n  imageURLs: [String!]\n  measuringUnit: MeasuringUnits\n  isQuantizationEnabled: Boolean\n  quantizedStates: [QuantizedStateInput!]\n  pricePerUnit: Float\n  availableUnits: Int\n}\n\ninput DeleteProductInput {\n  id: ID!\n}\n\ntype Mutation {\n  createProduct(input: CreateProductInput!): Product\n  updateProduct(input: UpdateProductInput!): Product\n  deleteProduct(input: DeleteProductInput!): Product\n}\n\ntype Subscription {\n  onCreateProduct: Product @aws_subscribe(mutations: [\"createProduct\"]) @aws_api_key @aws_cognito_user_pools\n  onUpdateProduct: Product @aws_subscribe(mutations: [\"updateProduct\"]) @aws_api_key @aws_cognito_user_pools\n  onDeleteProduct: Product @aws_subscribe(mutations: [\"deleteProduct\"]) @aws_api_key @aws_cognito_user_pools\n}\n"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLSchema",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "DefaultApiKey": {
+                        "id": "DefaultApiKey",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/DefaultApiKey",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::ApiKey",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "expires": 1685048706
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnApiKey",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "ProductTable": {
+                        "id": "ProductTable",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable",
+                        "children": {
+                          "ServiceRole": {
+                            "id": "ServiceRole",
+                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                                  "aws:cdk:cloudformation:props": {
+                                    "assumeRolePolicyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "sts:AssumeRole",
+                                          "Effect": "Allow",
+                                          "Principal": {
+                                            "Service": "appsync.amazonaws.com"
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    }
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                                  "version": "2.24.1"
+                                }
+                              },
+                              "DefaultPolicy": {
+                                "id": "DefaultPolicy",
+                                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy",
+                                "children": {
+                                  "Resource": {
+                                    "id": "Resource",
+                                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource",
+                                    "attributes": {
+                                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                      "aws:cdk:cloudformation:props": {
+                                        "policyDocument": {
+                                          "Statement": [
+                                            {
+                                              "Action": [
+                                                "dynamodb:BatchGetItem",
+                                                "dynamodb:BatchWriteItem",
+                                                "dynamodb:ConditionCheckItem",
+                                                "dynamodb:DeleteItem",
+                                                "dynamodb:DescribeTable",
+                                                "dynamodb:GetItem",
+                                                "dynamodb:GetRecords",
+                                                "dynamodb:GetShardIterator",
+                                                "dynamodb:PutItem",
+                                                "dynamodb:Query",
+                                                "dynamodb:Scan",
+                                                "dynamodb:UpdateItem"
+                                              ],
+                                              "Effect": "Allow",
+                                              "Resource": [
+                                                {
+                                                  "Fn::GetAtt": [
+                                                    "ProductTableB8D4E9ED",
+                                                    "Arn"
+                                                  ]
+                                                },
+                                                {
+                                                  "Ref": "AWS::NoValue"
+                                                }
+                                              ]
+                                            }
+                                          ],
+                                          "Version": "2012-10-17"
+                                        },
+                                        "policyName": "graphQLProductApiapiProductTableServiceRoleDefaultPolicy5B388958",
+                                        "roles": [
+                                          {
+                                            "Ref": "graphQLProductApiapiProductTableServiceRole6E2B2CD3"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "constructInfo": {
+                                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                      "version": "2.24.1"
+                                    }
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                                  "version": "2.24.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Role",
+                              "version": "2.24.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                              "aws:cdk:cloudformation:props": {
+                                "apiId": {
+                                  "Fn::GetAtt": [
+                                    "graphQLProductApiapi87FC31AA",
+                                    "ApiId"
+                                  ]
+                                },
+                                "name": "ProductTable",
+                                "type": "AMAZON_DYNAMODB",
+                                "dynamoDbConfig": {
+                                  "tableName": {
+                                    "Ref": "ProductTableB8D4E9ED"
+                                  },
+                                  "awsRegion": {
+                                    "Ref": "AWS::Region"
+                                  }
+                                },
+                                "serviceRoleArn": {
+                                  "Fn::GetAtt": [
+                                    "graphQLProductApiapiProductTableServiceRole6E2B2CD3",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                              "version": "2.24.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-appsync-alpha.DynamoDbDataSource",
+                          "version": "2.25.0-alpha.0"
+                        }
+                      },
+                      "NONE": {
+                        "id": "NONE",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                              "aws:cdk:cloudformation:props": {
+                                "apiId": {
+                                  "Fn::GetAtt": [
+                                    "graphQLProductApiapi87FC31AA",
+                                    "ApiId"
+                                  ]
+                                },
+                                "name": "NONE",
+                                "type": "NONE"
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                              "version": "2.24.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-appsync-alpha.NoneDataSource",
+                          "version": "2.25.0-alpha.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.GraphqlApi",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "ProductTable": {
+                    "id": "ProductTable",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                          "aws:cdk:cloudformation:props": {
+                            "keySchema": [
+                              {
+                                "attributeName": "id",
+                                "keyType": "HASH"
+                              }
+                            ],
+                            "attributeDefinitions": [
+                              {
+                                "attributeName": "id",
+                                "attributeType": "S"
+                              }
+                            ],
+                            "billingMode": "PAY_PER_REQUEST",
+                            "pointInTimeRecoverySpecification": {
+                              "pointInTimeRecoveryEnabled": false
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "ScalingRole": {
+                        "id": "ScalingRole",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/ScalingRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+                      "version": "2.24.1"
+                    }
+                  },
+                  "Query-getProduct-resolver": {
+                    "id": "Query-getProduct-resolver",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "fieldName": "getProduct",
+                            "typeName": "Query",
+                            "dataSourceName": "ProductTable",
+                            "kind": "UNIT",
+                            "requestMappingTemplate": "{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"GetItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": $util.dynamodb.toDynamoDBJson($ctx.args.id)\n} #end\n}",
+                            "responseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.Resolver",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "Query-listProducts-resolver": {
+                    "id": "Query-listProducts-resolver",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "fieldName": "listProducts",
+                            "typeName": "Query",
+                            "dataSourceName": "ProductTable",
+                            "kind": "UNIT",
+                            "requestMappingTemplate": "#set( $limit = $util.defaultIfNull($context.args.limit, 100) )\n#set( $ListRequest = {\n  \"version\": \"2018-05-29\",\n  \"limit\": $limit\n} )\n#if( $context.args.nextToken )\n  #set( $ListRequest.nextToken = $context.args.nextToken )\n#end\n#if( $context.args.filter )\n  #set( $ListRequest.filter = $util.parseJson(\"$util.transform.toDynamoDBFilterExpression($ctx.args.filter)\") )\n#end\n#if( !$util.isNull($modelQueryExpression)\n                        && !$util.isNullOrEmpty($modelQueryExpression.expression) )\n  $util.qr($ListRequest.put(\"operation\", \"Query\"))\n  $util.qr($ListRequest.put(\"query\", $modelQueryExpression))\n  #if( !$util.isNull($ctx.args.sortDirection) && $ctx.args.sortDirection == \"DESC\" )\n    #set( $ListRequest.scanIndexForward = false )\n  #else\n    #set( $ListRequest.scanIndexForward = true )\n  #end\n#else\n  $util.qr($ListRequest.put(\"operation\", \"Scan\"))\n#end\n$util.toJson($ListRequest)",
+                            "responseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.Resolver",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "Mutation-createProduct-resolver": {
+                    "id": "Mutation-createProduct-resolver",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "fieldName": "createProduct",
+                            "typeName": "Mutation",
+                            "dataSourceName": "ProductTable",
+                            "kind": "UNIT",
+                            "requestMappingTemplate": "## [Start] Set default values. **\n$util.qr($context.args.input.put(\"id\", $util.defaultIfNull($ctx.args.input.id, $util.autoId())))\n#set( $createdAt = $util.time.nowISO8601() )\n## Automatically set the createdAt timestamp. **\n$util.qr($context.args.input.put(\"createdAt\", $util.defaultIfNull($ctx.args.input.createdAt, $createdAt)))\n## Automatically set the updatedAt timestamp. **\n$util.qr($context.args.input.put(\"updatedAt\", $util.defaultIfNull($ctx.args.input.updatedAt, $createdAt)))\n## [End] Set default values. **\n## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  ## No Dynamic Group Authorization Rules **\n\n\n  ## [Start] Owner Authorization Checks **\n  #set( $isOwnerAuthorized = false )\n  ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n  #set( $allowedOwners0 = $util.defaultIfNull($ctx.args.input.owner, null) )\n  #set( $identityValue = $util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")) )\n  #if( $util.isList($allowedOwners0) )\n    #foreach( $allowedOwner in $allowedOwners0 )\n      #if( $allowedOwner == $identityValue )\n        #set( $isOwnerAuthorized = true )\n      #end\n    #end\n  #end\n  #if( $util.isString($allowedOwners0) )\n    #if( $allowedOwners0 == $identityValue )\n      #set( $isOwnerAuthorized = true )\n    #end\n  #end\n  #if( $util.isNull($allowedOwners0) && (! $ctx.args.input.containsKey(\"owner\")) )\n    $util.qr($ctx.args.input.put(\"owner\", $identityValue))\n    #set( $isOwnerAuthorized = true )\n  #end\n  ## [End] Owner Authorization Checks **\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || $isDynamicGroupAuthorized == true || $isOwnerAuthorized == true) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n## [Start] Prepare DynamoDB PutItem Request. **\n$util.qr($context.args.input.put(\"__typename\", \"Product\"))\n#if( $modelObjectKey )\n  #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n  #foreach( $entry in $modelObjectKey.entrySet() )\n    #if( $velocityCount == 1 )\n      $util.qr($condition.put(\"expression\", \"attribute_not_exists(#keyCondition$velocityCount)\"))\n    #else\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_not_exists(#keyCondition$velocityCount)\"))\n    #end\n    $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n  #end\n#else\n  #set( $condition = {\n  \"expression\": \"attribute_not_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n#end\n#if( $context.args.condition )\n  #set( $condition.expressionValues = {} )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"PutItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\":   $util.dynamodb.toDynamoDBJson($ctx.args.input.id)\n} #end,\n  \"attributeValues\": $util.dynamodb.toMapValuesJson($context.args.input),\n  \"condition\": $util.toJson($condition)\n}\n## [End] Prepare DynamoDB PutItem Request. **",
+                            "responseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.Resolver",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "Mutation-updateProduct-resolver": {
+                    "id": "Mutation-updateProduct-resolver",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "fieldName": "updateProduct",
+                            "typeName": "Mutation",
+                            "dataSourceName": "ProductTable",
+                            "kind": "UNIT",
+                            "requestMappingTemplate": "## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  #if( ! $isStaticGroupAuthorized )\n    ## No dynamic group authorization rules **\n\n\n    ## [Start] Owner Authorization Checks **\n    #set( $ownerAuthExpressions = [] )\n    #set( $ownerAuthExpressionValues = {} )\n    #set( $ownerAuthExpressionNames = {} )\n    ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n    $util.qr($ownerAuthExpressions.add(\"#owner0 = :identity0\"))\n    $util.qr($ownerAuthExpressionNames.put(\"#owner0\", \"owner\"))\n    $util.qr($ownerAuthExpressionValues.put(\":identity0\", $util.dynamodb.toDynamoDB($util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")))))\n    ## [End] Owner Authorization Checks **\n\n\n    ## [Start] Collect Auth Condition **\n    #set( $authCondition = $util.defaultIfNull($authCondition, {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n}) )\n    #set( $totalAuthExpression = \"\" )\n    ## Add dynamic group auth conditions if they exist **\n    #if( $groupAuthExpressions )\n      #foreach( $authExpr in $groupAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $groupAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($groupAuthExpressionNames))\n    #end\n    #if( $groupAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($groupAuthExpressionValues))\n    #end\n    ## Add owner auth conditions if they exist **\n    #if( $totalAuthExpression != \"\" && $ownerAuthExpressions && $ownerAuthExpressions.size() > 0 )\n      #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n    #end\n    #if( $ownerAuthExpressions )\n      #foreach( $authExpr in $ownerAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $ownerAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($ownerAuthExpressionNames))\n    #end\n    #if( $ownerAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($ownerAuthExpressionValues))\n    #end\n    ## Set final expression if it has changed. **\n    #if( $totalAuthExpression != \"\" )\n      #if( $util.isNullOrEmpty($authCondition.expression) )\n        #set( $authCondition.expression = \"($totalAuthExpression)\" )\n      #else\n        #set( $authCondition.expression = \"$authCondition.expression AND ($totalAuthExpression)\" )\n      #end\n    #end\n    ## [End] Collect Auth Condition **\n  #end\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || ($totalAuthExpression != \"\")) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n#set( $optionalNonNullableFields = [\"name\", \"description\", \"imageURLs\", \"measuringUnit\", \"isQuantizationEnabled\"] )\n#foreach( $field in $optionalNonNullableFields )\n  #if( $context.arguments.input.keySet().contains($field) && $util.isNull($context.args.input.get($field)) )\n$util.error(\"An argument you marked as Non-Null is set to Null in the query or the body of your request.\")\n  #end\n#end\n#if( $authCondition && $authCondition.expression != \"\" )\n  #set( $condition = $authCondition )\n  #if( $modelObjectKey )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#id)\"))\n    $util.qr($condition.expressionNames.put(\"#id\", \"id\"))\n  #end\n#else\n  #if( $modelObjectKey )\n    #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      #if( $velocityCount == 1 )\n        $util.qr($condition.put(\"expression\", \"attribute_exists(#keyCondition$velocityCount)\"))\n      #else\n        $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      #end\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    #set( $condition = {\n  \"expression\": \"attribute_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n  #end\n#end\n## Automatically set the updatedAt timestamp. **\n$util.qr($context.args.input.put(\"updatedAt\", $util.defaultIfNull($ctx.args.input.updatedAt, $util.time.nowISO8601())))\n$util.qr($context.args.input.put(\"__typename\", \"Product\"))\n## Update condition if type is @versioned **\n#if( $versionedCondition )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $versionedCondition.expression\"))\n  $util.qr($condition.expressionNames.putAll($versionedCondition.expressionNames))\n  $util.qr($condition.expressionValues.putAll($versionedCondition.expressionValues))\n#end\n#if( $context.args.condition )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n#set( $expNames = {} )\n#set( $expValues = {} )\n#set( $expSet = {} )\n#set( $expAdd = {} )\n#set( $expRemove = [] )\n#if( $modelObjectKey )\n  #set( $keyFields = [] )\n  #foreach( $entry in $modelObjectKey.entrySet() )\n    $util.qr($keyFields.add(\"$entry.key\"))\n  #end\n#else\n  #set( $keyFields = [\"id\"] )\n#end\n#foreach( $entry in $util.map.copyAndRemoveAllKeys($context.args.input, $keyFields).entrySet() )\n  #if( !$util.isNull($dynamodbNameOverrideMap) && $dynamodbNameOverrideMap.containsKey(\"$entry.key\") )\n    #set( $entryKeyAttributeName = $dynamodbNameOverrideMap.get(\"$entry.key\") )\n  #else\n    #set( $entryKeyAttributeName = $entry.key )\n  #end\n  #if( $util.isNull($entry.value) )\n    #set( $discard = $expRemove.add(\"#$entryKeyAttributeName\") )\n    $util.qr($expNames.put(\"#$entryKeyAttributeName\", \"$entry.key\"))\n  #else\n    $util.qr($expSet.put(\"#$entryKeyAttributeName\", \":$entryKeyAttributeName\"))\n    $util.qr($expNames.put(\"#$entryKeyAttributeName\", \"$entry.key\"))\n    $util.qr($expValues.put(\":$entryKeyAttributeName\", $util.dynamodb.toDynamoDB($entry.value)))\n  #end\n#end\n#set( $expression = \"\" )\n#if( !$expSet.isEmpty() )\n  #set( $expression = \"SET\" )\n  #foreach( $entry in $expSet.entrySet() )\n    #set( $expression = \"$expression $entry.key = $entry.value\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#if( !$expAdd.isEmpty() )\n  #set( $expression = \"$expression ADD\" )\n  #foreach( $entry in $expAdd.entrySet() )\n    #set( $expression = \"$expression $entry.key $entry.value\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#if( !$expRemove.isEmpty() )\n  #set( $expression = \"$expression REMOVE\" )\n  #foreach( $entry in $expRemove )\n    #set( $expression = \"$expression $entry\" )\n    #if( $foreach.hasNext() )\n      #set( $expression = \"$expression,\" )\n    #end\n  #end\n#end\n#set( $update = {} )\n$util.qr($update.put(\"expression\", \"$expression\"))\n#if( !$expNames.isEmpty() )\n  $util.qr($update.put(\"expressionNames\", $expNames))\n#end\n#if( !$expValues.isEmpty() )\n  $util.qr($update.put(\"expressionValues\", $expValues))\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"UpdateItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": {\n      \"S\": $util.toJson($context.args.input.id)\n  }\n} #end,\n  \"update\": $util.toJson($update),\n  \"condition\": $util.toJson($condition)\n}",
+                            "responseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.Resolver",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "Mutation-deleteProduct-resolver": {
+                    "id": "Mutation-deleteProduct-resolver",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Fn::GetAtt": [
+                                "graphQLProductApiapi87FC31AA",
+                                "ApiId"
+                              ]
+                            },
+                            "fieldName": "deleteProduct",
+                            "typeName": "Mutation",
+                            "dataSourceName": "ProductTable",
+                            "kind": "UNIT",
+                            "requestMappingTemplate": "## [Start] Determine request authentication mode **\n#if( $util.isNullOrEmpty($authMode) && !$util.isNull($ctx.identity) && !$util.isNull($ctx.identity.sub) && !$util.isNull($ctx.identity.issuer) && !$util.isNull($ctx.identity.username) && !$util.isNull($ctx.identity.claims) && !$util.isNull($ctx.identity.sourceIp) && !$util.isNull($ctx.identity.defaultAuthStrategy) )\n  #set( $authMode = \"userPools\" )\n#end\n## [End] Determine request authentication mode **\n## [Start] Check authMode and execute owner/group checks **\n#if( $authMode == \"userPools\" )\n  ## No Static Group Authorization Rules **\n\n\n  #if( ! $isStaticGroupAuthorized )\n    ## No dynamic group authorization rules **\n\n\n    ## [Start] Owner Authorization Checks **\n    #set( $ownerAuthExpressions = [] )\n    #set( $ownerAuthExpressionValues = {} )\n    #set( $ownerAuthExpressionNames = {} )\n    ## Authorization rule: { allow: owner, ownerField: \"owner\", identityClaim: \"cognito:username\" } **\n    $util.qr($ownerAuthExpressions.add(\"#owner0 = :identity0\"))\n    $util.qr($ownerAuthExpressionNames.put(\"#owner0\", \"owner\"))\n    $util.qr($ownerAuthExpressionValues.put(\":identity0\", $util.dynamodb.toDynamoDB($util.defaultIfNull($ctx.identity.claims.get(\"username\"), $util.defaultIfNull($ctx.identity.claims.get(\"cognito:username\"), \"___xamznone____\")))))\n    ## [End] Owner Authorization Checks **\n\n\n    ## [Start] Collect Auth Condition **\n    #set( $authCondition = $util.defaultIfNull($authCondition, {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n}) )\n    #set( $totalAuthExpression = \"\" )\n    ## Add dynamic group auth conditions if they exist **\n    #if( $groupAuthExpressions )\n      #foreach( $authExpr in $groupAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $groupAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($groupAuthExpressionNames))\n    #end\n    #if( $groupAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($groupAuthExpressionValues))\n    #end\n    ## Add owner auth conditions if they exist **\n    #if( $totalAuthExpression != \"\" && $ownerAuthExpressions && $ownerAuthExpressions.size() > 0 )\n      #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n    #end\n    #if( $ownerAuthExpressions )\n      #foreach( $authExpr in $ownerAuthExpressions )\n        #set( $totalAuthExpression = \"$totalAuthExpression $authExpr\" )\n        #if( $foreach.hasNext )\n          #set( $totalAuthExpression = \"$totalAuthExpression OR\" )\n        #end\n      #end\n    #end\n    #if( $ownerAuthExpressionNames )\n      $util.qr($authCondition.expressionNames.putAll($ownerAuthExpressionNames))\n    #end\n    #if( $ownerAuthExpressionValues )\n      $util.qr($authCondition.expressionValues.putAll($ownerAuthExpressionValues))\n    #end\n    ## Set final expression if it has changed. **\n    #if( $totalAuthExpression != \"\" )\n      #if( $util.isNullOrEmpty($authCondition.expression) )\n        #set( $authCondition.expression = \"($totalAuthExpression)\" )\n      #else\n        #set( $authCondition.expression = \"$authCondition.expression AND ($totalAuthExpression)\" )\n      #end\n    #end\n    ## [End] Collect Auth Condition **\n  #end\n\n\n  ## [Start] Throw if unauthorized **\n  #if( !($isStaticGroupAuthorized == true || ($totalAuthExpression != \"\")) )\n    $util.unauthorized()\n  #end\n  ## [End] Throw if unauthorized **\n#end\n## [End] Check authMode and execute owner/group checks **\n\n#if( $authCondition )\n  #set( $condition = $authCondition )\n  #if( $modelObjectKey )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#id)\"))\n    $util.qr($condition.expressionNames.put(\"#id\", \"id\"))\n  #end\n#else\n  #if( $modelObjectKey )\n    #set( $condition = {\n  \"expression\": \"\",\n  \"expressionNames\": {},\n  \"expressionValues\": {}\n} )\n    #foreach( $entry in $modelObjectKey.entrySet() )\n      #if( $velocityCount == 1 )\n        $util.qr($condition.put(\"expression\", \"attribute_exists(#keyCondition$velocityCount)\"))\n      #else\n        $util.qr($condition.put(\"expression\", \"$condition.expression AND attribute_exists(#keyCondition$velocityCount)\"))\n      #end\n      $util.qr($condition.expressionNames.put(\"#keyCondition$velocityCount\", \"$entry.key\"))\n    #end\n  #else\n    #set( $condition = {\n  \"expression\": \"attribute_exists(#id)\",\n  \"expressionNames\": {\n      \"#id\": \"id\"\n  },\n  \"expressionValues\": {}\n} )\n  #end\n#end\n#if( $versionedCondition )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $versionedCondition.expression\"))\n  $util.qr($condition.expressionNames.putAll($versionedCondition.expressionNames))\n  #set( $expressionValues = $util.defaultIfNull($condition.expressionValues, {}) )\n  $util.qr($expressionValues.putAll($versionedCondition.expressionValues))\n  #set( $condition.expressionValues = $expressionValues )\n#end\n#if( $context.args.condition )\n  #set( $conditionFilterExpressions = $util.parseJson($util.transform.toDynamoDBConditionExpression($context.args.condition)) )\n  $util.qr($condition.put(\"expression\", \"($condition.expression) AND $conditionFilterExpressions.expression\"))\n  $util.qr($condition.expressionNames.putAll($conditionFilterExpressions.expressionNames))\n  #set( $conditionExpressionValues = $util.defaultIfNull($condition.expressionValues, {}) )\n  $util.qr($conditionExpressionValues.putAll($conditionFilterExpressions.expressionValues))\n  #set( $condition.expressionValues = $conditionExpressionValues )\n  $util.qr($condition.expressionValues.putAll($conditionFilterExpressions.expressionValues))\n#end\n#if( $condition.expressionValues && $condition.expressionValues.size() == 0 )\n  #set( $condition = {\n  \"expression\": $condition.expression,\n  \"expressionNames\": $condition.expressionNames\n} )\n#end\n{\n  \"version\": \"2018-05-29\",\n  \"operation\": \"DeleteItem\",\n  \"key\": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {\n  \"id\": $util.dynamodb.toDynamoDBJson($ctx.args.input.id)\n} #end,\n  \"condition\": $util.toJson($condition)\n}",
+                            "responseMappingTemplate": "#if( $ctx.error )\n$util.error($ctx.error.message, $ctx.error.type)\n#else\n$util.toJson($ctx.result)\n#end"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-appsync-alpha.Resolver",
+                      "version": "2.25.0-alpha.0"
+                    }
+                  },
+                  "CDKMetadata": {
+                    "id": "CDKMetadata",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.24.1"
+                        }
+                      },
+                      "Condition": {
+                        "id": "Condition",
+                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Condition",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnCondition",
+                          "version": "2.24.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "constructs.Construct",
+                      "version": "10.1.6"
+                    }
+                  },
+                  "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl": {
+                    "id": "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnOutput",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.NestedStack",
+                  "version": "2.24.1"
+                }
+              },
+              "appsync-nested-stack.NestedStack": {
+                "id": "appsync-nested-stack.NestedStack",
+                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack",
+                "children": {
+                  "appsync-nested-stack.NestedStackResource": {
+                    "id": "appsync-nested-stack.NestedStackResource",
+                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::CloudFormation::Stack",
+                      "aws:cdk:cloudformation:props": {
+                        "templateUrl": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "https://s3.",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ".",
+                              {
+                                "Ref": "AWS::URLSuffix"
+                              },
+                              "/",
+                              {
+                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                              },
+                              "/3e4153f3ed82acc1237f7565850eb0d43d683ff6f40318d8667ff1b8c32e6bc0.json"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnStack",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.1.6"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-appsync-transformer.AppSyncTransformer",
+              "version": "2.0.0-alpha.0"
+            }
+          },
+          "appsyncGraphQLEndpointOutput": {
+            "id": "appsyncGraphQLEndpointOutput",
+            "path": "AppsyncStack/appsyncGraphQLEndpointOutput",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.24.1"
+            }
+          },
+          "amplifyApp": {
+            "id": "amplifyApp",
+            "path": "AppsyncStack/amplifyApp",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "AppsyncStack/amplifyApp/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AppsyncStack/amplifyApp/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "amplify.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.24.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AppsyncStack/amplifyApp/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Amplify::App",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "amplifyApp",
+                    "basicAuthConfig": {
+                      "enableBasicAuth": false
+                    },
+                    "environmentVariables": [
+                      {
+                        "name": "identityPoolID",
+                        "value": {
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefidentitypool5B8C25DB"
+                        }
+                      },
+                      {
+                        "name": "userPoolID",
+                        "value": {
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+                        }
+                      },
+                      {
+                        "name": "userPoolClientID",
+                        "value": {
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+                        }
+                      },
+                      {
+                        "name": "region",
+                        "value": {
+                          "Ref": "AWS::Region"
+                        }
+                      },
+                      {
+                        "name": "appsyncApi",
+                        "value": {
+                          "Fn::GetAtt": [
+                            "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
+                            "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+                          ]
+                        }
+                      }
+                    ],
+                    "iamServiceRole": {
+                      "Fn::GetAtt": [
+                        "amplifyAppRoleAE39041F",
+                        "Arn"
+                      ]
+                    },
+                    "oauthToken": "{{resolve:secretsmanager:githubAccessToken:SecretString:::}}",
+                    "repository": "https://github.com/Archisman-Mridha/amazon"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_amplify.CfnApp",
+                  "version": "2.24.1"
+                }
+              },
+              "main": {
+                "id": "main",
+                "path": "AppsyncStack/amplifyApp/main",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AppsyncStack/amplifyApp/main/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Amplify::Branch",
+                      "aws:cdk:cloudformation:props": {
+                        "appId": {
+                          "Fn::GetAtt": [
+                            "amplifyApp20D15BF0",
+                            "AppId"
+                          ]
+                        },
+                        "branchName": "main",
+                        "enableAutoBuild": true,
+                        "enablePullRequestPreview": true
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_amplify.CfnBranch",
+                      "version": "2.24.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-amplify-alpha.Branch",
+                  "version": "2.25.0-alpha.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-amplify-alpha.App",
+              "version": "2.25.0-alpha.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AppsyncStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AppsyncStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.24.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AppsyncStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.24.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.6"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.24.1"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.24.1"
+    }
+  }
+}

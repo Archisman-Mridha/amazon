@@ -1,0 +1,377 @@
+{
+ "Resources": {
+  "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127": {
+   "Type": "AWS::CloudFormation::Stack",
+   "Properties": {
+    "TemplateURL": {
+     "Fn::Join": [
+      "",
+      [
+       "https://s3.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".",
+       {
+        "Ref": "AWS::URLSuffix"
+       },
+       "/",
+       {
+        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+       },
+       "/3e4153f3ed82acc1237f7565850eb0d43d683ff6f40318d8667ff1b8c32e6bc0.json"
+      ]
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
+    "aws:asset:path": "AppsyncStackgraphQLProductApiappsyncnestedstackA4CEDD5B.nested.template.json",
+    "aws:asset:property": "TemplateURL"
+   }
+  },
+  "amplifyAppRoleAE39041F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "amplify.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/amplifyApp/Role/Resource"
+   }
+  },
+  "amplifyApp20D15BF0": {
+   "Type": "AWS::Amplify::App",
+   "Properties": {
+    "Name": "amplifyApp",
+    "BasicAuthConfig": {
+     "EnableBasicAuth": false
+    },
+    "EnvironmentVariables": [
+     {
+      "Name": "identityPoolID",
+      "Value": {
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefidentitypool5B8C25DB"
+      }
+     },
+     {
+      "Name": "userPoolID",
+      "Value": {
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+      }
+     },
+     {
+      "Name": "userPoolClientID",
+      "Value": {
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+      }
+     },
+     {
+      "Name": "region",
+      "Value": {
+       "Ref": "AWS::Region"
+      }
+     },
+     {
+      "Name": "appsyncApi",
+      "Value": {
+       "Fn::GetAtt": [
+        "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
+        "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+       ]
+      }
+     }
+    ],
+    "IAMServiceRole": {
+     "Fn::GetAtt": [
+      "amplifyAppRoleAE39041F",
+      "Arn"
+     ]
+    },
+    "OauthToken": "{{resolve:secretsmanager:githubAccessToken:SecretString:::}}",
+    "Repository": "https://github.com/Archisman-Mridha/amazon"
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/amplifyApp/Resource"
+   }
+  },
+  "amplifyAppmain786CCA38": {
+   "Type": "AWS::Amplify::Branch",
+   "Properties": {
+    "AppId": {
+     "Fn::GetAtt": [
+      "amplifyApp20D15BF0",
+      "AppId"
+     ]
+    },
+    "BranchName": "main",
+    "EnableAutoBuild": true,
+    "EnablePullRequestPreview": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/amplifyApp/main/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2OWw6DIBBF1+I/jI+0/W7rAkzsAhqKGEcRiECbhrD3ijV+ncncOydTQahOUGbsYynvJirxBeHhGJ9I3atjaLwz3pG19QzIZgitliIFiZGw2UjsvxDWzc2YFNwXpvgQ41YSVvuFbwe1Vh061CqS6gwFZdIMDIrsun+QJ+6+PQxJefiU7gSMNn+XFyhXQzZaRLp45XAW0P75A0RtakrXAAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "AppsyncStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "appsyncGraphQLEndpointOutput": {
+   "Description": "Output for aws_appsync_graphqlEndpoint",
+   "Value": {
+    "Fn::GetAtt": [
+     "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
+     "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+    ]
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -41,10 +41,6 @@ aws/*.js
 aws/!jest.config.js
 aws/*.d.ts
 
-# CDK asset staging directory
-.cdk.staging
-cdk.out
-
 # Flutter Miscellaneous
 app/*.class
 app/*.log
