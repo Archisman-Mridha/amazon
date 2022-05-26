@@ -61,6 +61,10 @@ app/.packages
 app/.pub-cache/
 app/.pub/
 app//build/
+app/macos
+app/linux
+app/windows
+app/web
 
 # Symbolication related
 app/app.*.symbols
