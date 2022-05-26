@@ -65,6 +65,7 @@ app/macos
 app/linux
 app/windows
 app/web
+app/build
 
 # Symbolication related
 app/app.*.symbols
