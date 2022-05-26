@@ -1,4 +1,7 @@
+// import "package:app/screens/home.screen.dart";
+import "package:app/screens/register.screen.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 
 void main( ) => runApp(const App( ));
 
@@ -8,16 +11,22 @@ class App extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
 
-        return const MaterialApp(
+        return MaterialApp(
 
             title: "Amazon Clone",
-            home: Scaffold(
+            debugShowCheckedModeBanner: false,
 
-                body: Center(
+            theme: ThemeData(
 
-                    child: Text("welcome to amazon")
-                )
-            )
+                fontFamily: GoogleFonts.montserrat(fontWeight: FontWeight.w500).fontFamily
+            ),
+
+            initialRoute: "/",
+            routes: {
+
+                "/": (context) => const RegisterScreen( ),
+                // "/register": (context) => const RegisterScreen( )
+            }
         );
     }
 }

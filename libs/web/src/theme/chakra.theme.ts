@@ -29,6 +29,13 @@ export const chakraTheme= extendTheme({
                     color: "#C5FFF4"
                 }
             }
+        },
+
+        Button: {
+            baseStyle: {
+
+                borderRadius: "35px"
+            }
         }
     }
 })
