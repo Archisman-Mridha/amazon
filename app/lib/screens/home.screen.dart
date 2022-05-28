@@ -1,3 +1,5 @@
+import "package:app/components/customAppbar/customAppbar.component.dart";
+import "package:app/components/customDrawer/customDrawer.component.dart";
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatelessWidget {
@@ -8,8 +10,14 @@ class HomeScreen extends StatelessWidget {
 
         return const Scaffold(
 
-            body: Center(
-                child: Text("welcome to home screen")
+            appBar: CustomAppbar( ),
+
+            drawer: CustomDrawer( ),
+
+            body: SafeArea(
+                child: Center(
+                    child: Text("welcome to amazon")
+                )
             )
         );
     }

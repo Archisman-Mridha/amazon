@@ -5,13 +5,15 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:ionicons/ionicons.dart";
 
-class RegisterScreen extends StatelessWidget {
-    const RegisterScreen({ Key? key }): super(key: key);
+class SigninScreen extends StatelessWidget {
+
+    const SigninScreen({ Key? key }): super(key: key);
 
     @override
     Widget build(BuildContext context) {
 
         return Scaffold(
+
             body: SafeArea(
                 child: SingleChildScrollView(
                     child: ConstrainedBox(
@@ -30,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
 
                                     const SizedBox(height: 25),
 
-                                    Text("Register", style: TextStyle(fontSize: 22.5, fontFamily: GoogleFonts.montserrat(fontWeight: FontWeight.w900).fontFamily)),
+                                    Text("Signin", style: TextStyle(fontSize: 22.5, fontFamily: GoogleFonts.montserrat(fontWeight: FontWeight.w900).fontFamily)),
 
                                     const SizedBox(height: 25),
 
@@ -39,27 +41,8 @@ class RegisterScreen extends StatelessWidget {
                                             children: <Widget>[
 
                                                 CustomFormField(
-                                                    hintText: "Full Name",
+                                                    hintText: "Email Address or Phone Number",
                                                     prefixicon: SvgPicture.asset("assets/svgs/pen.svg"),
-                                                    marginBottom: 17.5
-                                                ),
-
-                                                const CustomFormField(
-                                                    hintText: "Email Address",
-                                                    prefixicon: Icon(Ionicons.mail_outline, color: Colors.black),
-                                                    marginBottom: 17.5
-                                                ),
-
-                                                const CustomFormField(
-                                                    hintText: "Phone Number",
-                                                    prefixicon: Icon(Ionicons.call_outline, color: Colors.black),
-                                                    marginBottom: 17.5
-                                                ),
-
-                                                const CustomFormField(
-                                                    hintText: "Delivery Address",
-                                                    prefixicon: Icon(Ionicons.location_outline, color: Colors.black),
-                                                    suffixicon: Icon(Ionicons.locate_outline),
                                                     marginBottom: 17.5
                                                 ),
 
@@ -68,8 +51,18 @@ class RegisterScreen extends StatelessWidget {
                                                     prefixicon: SvgPicture.asset("assets/svgs/key.svg"),
                                                     suffixicon: const Icon(Ionicons.eye_outline),
                                                     isObscureText: true,
-                                                    marginBottom: 25
+                                                    marginBottom: 5
                                                 ),
+
+                                                Container(
+                                                    alignment: Alignment.centerRight,
+                                                    child: GestureDetector(
+                                                        onTap: ( ) => { },
+                                                        child: const Text("Forgot Password", style: TextStyle(color: Colors.lightBlue))
+                                                    )
+                                                ),
+
+                                                const SizedBox(height: 20),
 
                                                 Container(
                                                     alignment: Alignment.centerLeft,
@@ -82,11 +75,11 @@ class RegisterScreen extends StatelessWidget {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: <Widget>[
 
-                                                        const Text("Already have an account ? "),
+                                                        const Text("Don't have an account ? "),
 
                                                         GestureDetector(
                                                             onTap: ( ) => { },
-                                                            child: const Text("Sign in", style: TextStyle(color: Colors.lightBlue))
+                                                            child: const Text("Register", style: TextStyle(color: Colors.lightBlue))
                                                         ),
 
                                                         const Text(" here !")
