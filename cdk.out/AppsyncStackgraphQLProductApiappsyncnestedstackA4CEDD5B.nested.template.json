@@ -91,7 +91,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1685048706
+    "Expires": 1685229936
    },
    "DependsOn": [
     "graphQLProductApiapiSchema227BE598"

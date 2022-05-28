@@ -13,7 +13,7 @@ export class AuthenticationResourcesManagementStack extends Stack {
 
         //* used for managing authentication workflow
 
-        this.userPool= new UserPool(this, "userpool", {
+        this.userPool= new UserPool(this, "amazonUserpool", {
 
             selfSignUpEnabled: true,
             removalPolicy: RemovalPolicy.DESTROY,
@@ -33,14 +33,14 @@ export class AuthenticationResourcesManagementStack extends Stack {
             customAttributes: { }
         })
 
-        this.userPoolClient= new UserPoolClient(this, "userpool-client", {
+        this.userPoolClient= new UserPoolClient(this, "amazonUserpoolClient", {
 
             userPool: this.userPool,
             accessTokenValidity: Duration.days(1),
             refreshTokenValidity: Duration.days(365)
         })
 
-        this.identityPool= new CfnIdentityPool(this, "identity-pool", {
+        this.identityPool= new CfnIdentityPool(this, "amazonIdentityPool", {
 
             allowUnauthenticatedIdentities: false,
             cognitoIdentityProviders: [{

@@ -11,7 +11,7 @@ export class MicrofrontendDeploymentStack extends Stack {
 
         //* used for deploying microfrontends
 
-        const hostingBucket= new Bucket(this, "hostingBucket", {
+        const hostingBucket= new Bucket(this, "amazonMicrofrontendsHostingBucket", {
 
             bucketName: PhysicalName.GENERATE_IF_NEEDED,
             publicReadAccess: false,
@@ -34,11 +34,11 @@ export class MicrofrontendDeploymentStack extends Stack {
             destinationBucket: hostingBucket
         })
 
-        const oai= new OriginAccessIdentity(this, "oai")
+        const oai= new OriginAccessIdentity(this, "amazonMicrofrontendsOAI")
 
         hostingBucket.grantRead(oai)
 
-        const cloudfrontDistribution= new Distribution(this, "cloudFrontDistribution", {
+        const cloudfrontDistribution= new Distribution(this, "amazonCloudFrontDistribution", {
 
             defaultRootObject: "container/index.html",
             defaultBehavior: {

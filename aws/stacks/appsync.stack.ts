@@ -18,7 +18,7 @@ export class AppsyncStack extends Stack {
 
         //* used for managing appsync apis
 
-        const graphQLProductApi= new AppSyncTransformer(this, "graphQLProductApi", {
+        const graphQLProductApi= new AppSyncTransformer(this, "amazonGraphQLProductApi", {
 
             fieldLogLevel: FieldLogLevel.ALL,
             schemaPath: "graphql/schema.graphql",
@@ -43,7 +43,7 @@ export class AppsyncStack extends Stack {
             }
         })
 
-        const amplifyApp= new App(this, "amplifyApp", {
+        const amplifyApp= new App(this, "amazonAmplifyProject", {
             sourceCodeProvider: new GitHubSourceCodeProvider({
 
                 owner: "Archisman-Mridha",

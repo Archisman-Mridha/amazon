@@ -1,4 +1,3 @@
-import "package:app/components/searchbarSearcharea/searchbarSearcharea.component.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 
@@ -16,13 +15,7 @@ class Searchbar extends StatelessWidget {
 
                 ViewProductCategoriesButton( ),
 
-                Expanded(
-                    child: SizedBox(
-                        height: 42.5,
-
-                        child: SearchbarSearcharea( )
-                    )
-                ),
+                SearchArea( ),
 
                 SearchButton( )
             ]
@@ -57,6 +50,38 @@ class ViewProductCategoriesButton extends StatelessWidget {
                             child: SvgPicture.asset("assets/svgs/carret-down-arrow.svg")
                         )
                     ]
+                )
+            )
+        );
+    }
+}
+
+class SearchArea extends StatelessWidget {
+
+    const SearchArea({ Key? key }): super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+
+        return const Expanded(
+            child: SizedBox(
+                height: 42.5,
+
+                child: TextField(
+
+                    style: TextStyle(fontSize: 13),
+                    textAlignVertical: TextAlignVertical.center,
+                    autocorrect: false,
+
+                    decoration: InputDecoration(
+                        hintText: "Search Here",
+                        hintStyle: TextStyle(color: Color.fromRGBO(94, 94, 94, 1), fontSize: 13),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        focusedBorder: InputBorder.none,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.zero), borderSide: BorderSide.none)
+                    )
                 )
             )
         );
