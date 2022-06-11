@@ -12,747 +12,21 @@
           "version": "10.1.6"
         }
       },
-      "MicrofrontendDeploymentStack": {
-        "id": "MicrofrontendDeploymentStack",
-        "path": "MicrofrontendDeploymentStack",
-        "children": {
-          "hostingBucket": {
-            "id": "hostingBucket",
-            "path": "MicrofrontendDeploymentStack/hostingBucket",
-            "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "MicrofrontendDeploymentStack/hostingBucket/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
-                  "aws:cdk:cloudformation:props": {
-                    "bucketEncryption": {
-                      "serverSideEncryptionConfiguration": [
-                        {
-                          "serverSideEncryptionByDefault": {
-                            "sseAlgorithm": "AES256"
-                          }
-                        }
-                      ]
-                    },
-                    "corsConfiguration": {
-                      "corsRules": [
-                        {
-                          "maxAge": 3000,
-                          "allowedHeaders": [
-                            "Authorization",
-                            "Content-Length"
-                          ],
-                          "allowedMethods": [
-                            "GET"
-                          ],
-                          "allowedOrigins": [
-                            "*"
-                          ]
-                        }
-                      ]
-                    },
-                    "tags": [
-                      {
-                        "key": "aws-cdk:auto-delete-objects",
-                        "value": "true"
-                      },
-                      {
-                        "key": "aws-cdk:cr-owned:b6892e92",
-                        "value": "true"
-                      }
-                    ],
-                    "versioningConfiguration": {
-                      "status": "Enabled"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
-                  "version": "2.24.1"
-                }
-              },
-              "Policy": {
-                "id": "Policy",
-                "path": "MicrofrontendDeploymentStack/hostingBucket/Policy",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "MicrofrontendDeploymentStack/hostingBucket/Policy/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
-                      "aws:cdk:cloudformation:props": {
-                        "bucket": {
-                          "Ref": "hostingBucketA91A61FE"
-                        },
-                        "policyDocument": {
-                          "Statement": [
-                            {
-                              "Action": [
-                                "s3:DeleteObject*",
-                                "s3:GetBucket*",
-                                "s3:List*"
-                              ],
-                              "Effect": "Allow",
-                              "Principal": {
-                                "AWS": {
-                                  "Fn::GetAtt": [
-                                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
-                                    "Arn"
-                                  ]
-                                }
-                              },
-                              "Resource": [
-                                {
-                                  "Fn::GetAtt": [
-                                    "hostingBucketA91A61FE",
-                                    "Arn"
-                                  ]
-                                },
-                                {
-                                  "Fn::Join": [
-                                    "",
-                                    [
-                                      {
-                                        "Fn::GetAtt": [
-                                          "hostingBucketA91A61FE",
-                                          "Arn"
-                                        ]
-                                      },
-                                      "/*"
-                                    ]
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "Action": [
-                                "s3:GetBucket*",
-                                "s3:GetObject*",
-                                "s3:List*"
-                              ],
-                              "Effect": "Allow",
-                              "Principal": {
-                                "CanonicalUser": {
-                                  "Fn::GetAtt": [
-                                    "oai7A77E975",
-                                    "S3CanonicalUserId"
-                                  ]
-                                }
-                              },
-                              "Resource": [
-                                {
-                                  "Fn::GetAtt": [
-                                    "hostingBucketA91A61FE",
-                                    "Arn"
-                                  ]
-                                },
-                                {
-                                  "Fn::Join": [
-                                    "",
-                                    [
-                                      {
-                                        "Fn::GetAtt": [
-                                          "hostingBucketA91A61FE",
-                                          "Arn"
-                                        ]
-                                      },
-                                      "/*"
-                                    ]
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "Action": "s3:GetObject",
-                              "Effect": "Allow",
-                              "Principal": {
-                                "CanonicalUser": {
-                                  "Fn::GetAtt": [
-                                    "oai7A77E975",
-                                    "S3CanonicalUserId"
-                                  ]
-                                }
-                              },
-                              "Resource": {
-                                "Fn::Join": [
-                                  "",
-                                  [
-                                    {
-                                      "Fn::GetAtt": [
-                                        "hostingBucketA91A61FE",
-                                        "Arn"
-                                      ]
-                                    },
-                                    "/*"
-                                  ]
-                                ]
-                              }
-                            }
-                          ],
-                          "Version": "2012-10-17"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
-                  "version": "2.24.1"
-                }
-              },
-              "AutoDeleteObjectsCustomResource": {
-                "id": "AutoDeleteObjectsCustomResource",
-                "path": "MicrofrontendDeploymentStack/hostingBucket/AutoDeleteObjectsCustomResource",
-                "children": {
-                  "Default": {
-                    "id": "Default",
-                    "path": "MicrofrontendDeploymentStack/hostingBucket/AutoDeleteObjectsCustomResource/Default",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CustomResource",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_s3.Bucket",
-              "version": "2.24.1"
-            }
-          },
-          "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
-            "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
-            "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
-            "children": {
-              "Staging": {
-                "id": "Staging",
-                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.AssetStaging",
-                  "version": "2.24.1"
-                }
-              },
-              "Role": {
-                "id": "Role",
-                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.24.1"
-                }
-              },
-              "Handler": {
-                "id": "Handler",
-                "path": "MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.CustomResourceProvider",
-              "version": "2.24.1"
-            }
-          },
-          "microfrontendsS3Deployment": {
-            "id": "microfrontendsS3Deployment",
-            "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment",
-            "children": {
-              "AwsCliLayer": {
-                "id": "AwsCliLayer",
-                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer",
-                "children": {
-                  "Code": {
-                    "id": "Code",
-                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code",
-                    "children": {
-                      "Stage": {
-                        "id": "Stage",
-                        "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code/Stage",
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.AssetStaging",
-                          "version": "2.24.1"
-                        }
-                      },
-                      "AssetBucket": {
-                        "id": "AssetBucket",
-                        "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Code/AssetBucket",
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                          "version": "2.24.1"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                      "version": "2.24.1"
-                    }
-                  },
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
-                      "aws:cdk:cloudformation:props": {
-                        "content": {
-                          "s3Bucket": {
-                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                          },
-                          "s3Key": "e6b3c8169ff937ea363b0bb4d13b24b0a38c958c42318f72066e3e59f0148c2c.zip"
-                        },
-                        "description": "/opt/awscli/aws"
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.lambda_layer_awscli.AwsCliLayer",
-                  "version": "2.24.1"
-                }
-              },
-              "CustomResourceHandler": {
-                "id": "CustomResourceHandler",
-                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResourceHandler",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
-                  "version": "2.24.1"
-                }
-              },
-              "Asset1": {
-                "id": "Asset1",
-                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1",
-                "children": {
-                  "Stage": {
-                    "id": "Stage",
-                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1/Stage",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.AssetStaging",
-                      "version": "2.24.1"
-                    }
-                  },
-                  "AssetBucket": {
-                    "id": "AssetBucket",
-                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/Asset1/AssetBucket",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                  "version": "2.24.1"
-                }
-              },
-              "CustomResource": {
-                "id": "CustomResource",
-                "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResource",
-                "children": {
-                  "Default": {
-                    "id": "Default",
-                    "path": "MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResource/Default",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CustomResource",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_s3_deployment.BucketDeployment",
-              "version": "2.24.1"
-            }
-          },
-          "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C": {
-            "id": "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C",
-            "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C",
-            "children": {
-              "ServiceRole": {
-                "id": "ServiceRole",
-                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                      "aws:cdk:cloudformation:props": {
-                        "assumeRolePolicyDocument": {
-                          "Statement": [
-                            {
-                              "Action": "sts:AssumeRole",
-                              "Effect": "Allow",
-                              "Principal": {
-                                "Service": "lambda.amazonaws.com"
-                              }
-                            }
-                          ],
-                          "Version": "2012-10-17"
-                        },
-                        "managedPolicyArns": [
-                          {
-                            "Fn::Join": [
-                              "",
-                              [
-                                "arn:",
-                                {
-                                  "Ref": "AWS::Partition"
-                                },
-                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-                              ]
-                            ]
-                          }
-                        ]
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                      "version": "2.24.1"
-                    }
-                  },
-                  "DefaultPolicy": {
-                    "id": "DefaultPolicy",
-                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy",
-                    "children": {
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
-                          "aws:cdk:cloudformation:props": {
-                            "policyDocument": {
-                              "Statement": [
-                                {
-                                  "Action": [
-                                    "s3:GetBucket*",
-                                    "s3:GetObject*",
-                                    "s3:List*"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Resource": [
-                                    {
-                                      "Fn::Join": [
-                                        "",
-                                        [
-                                          "arn:",
-                                          {
-                                            "Ref": "AWS::Partition"
-                                          },
-                                          ":s3:::",
-                                          {
-                                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                                          },
-                                          "/*"
-                                        ]
-                                      ]
-                                    },
-                                    {
-                                      "Fn::Join": [
-                                        "",
-                                        [
-                                          "arn:",
-                                          {
-                                            "Ref": "AWS::Partition"
-                                          },
-                                          ":s3:::",
-                                          {
-                                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                                          }
-                                        ]
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "Action": [
-                                    "s3:Abort*",
-                                    "s3:DeleteObject*",
-                                    "s3:GetBucket*",
-                                    "s3:GetObject*",
-                                    "s3:List*",
-                                    "s3:PutObject",
-                                    "s3:PutObjectLegalHold",
-                                    "s3:PutObjectRetention",
-                                    "s3:PutObjectTagging",
-                                    "s3:PutObjectVersionTagging"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Resource": [
-                                    {
-                                      "Fn::GetAtt": [
-                                        "hostingBucketA91A61FE",
-                                        "Arn"
-                                      ]
-                                    },
-                                    {
-                                      "Fn::Join": [
-                                        "",
-                                        [
-                                          {
-                                            "Fn::GetAtt": [
-                                              "hostingBucketA91A61FE",
-                                              "Arn"
-                                            ]
-                                          },
-                                          "/*"
-                                        ]
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ],
-                              "Version": "2012-10-17"
-                            },
-                            "policyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
-                            "roles": [
-                              {
-                                "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
-                              }
-                            ]
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                          "version": "2.24.1"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_iam.Policy",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_iam.Role",
-                  "version": "2.24.1"
-                }
-              },
-              "Code": {
-                "id": "Code",
-                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code",
-                "children": {
-                  "Stage": {
-                    "id": "Stage",
-                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/Stage",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.AssetStaging",
-                      "version": "2.24.1"
-                    }
-                  },
-                  "AssetBucket": {
-                    "id": "AssetBucket",
-                    "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/AssetBucket",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                      "version": "2.24.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                  "version": "2.24.1"
-                }
-              },
-              "Resource": {
-                "id": "Resource",
-                "path": "MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
-                  "aws:cdk:cloudformation:props": {
-                    "code": {
-                      "s3Bucket": {
-                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                      },
-                      "s3Key": "f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da.zip"
-                    },
-                    "role": {
-                      "Fn::GetAtt": [
-                        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
-                        "Arn"
-                      ]
-                    },
-                    "handler": "index.handler",
-                    "layers": [
-                      {
-                        "Ref": "microfrontendsS3DeploymentAwsCliLayerD738F6A3"
-                      }
-                    ],
-                    "runtime": "python3.7",
-                    "timeout": 900
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_lambda.Function",
-              "version": "2.24.1"
-            }
-          },
-          "oai": {
-            "id": "oai",
-            "path": "MicrofrontendDeploymentStack/oai",
-            "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "MicrofrontendDeploymentStack/oai/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
-                  "aws:cdk:cloudformation:props": {
-                    "cloudFrontOriginAccessIdentityConfig": {
-                      "comment": "Allows CloudFront to reach the bucket"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnCloudFrontOriginAccessIdentity",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_cloudfront.OriginAccessIdentity",
-              "version": "2.24.1"
-            }
-          },
-          "cloudFrontDistribution": {
-            "id": "cloudFrontDistribution",
-            "path": "MicrofrontendDeploymentStack/cloudFrontDistribution",
-            "children": {
-              "Origin1": {
-                "id": "Origin1",
-                "path": "MicrofrontendDeploymentStack/cloudFrontDistribution/Origin1",
-                "constructInfo": {
-                  "fqn": "constructs.Construct",
-                  "version": "10.1.6"
-                }
-              },
-              "Resource": {
-                "id": "Resource",
-                "path": "MicrofrontendDeploymentStack/cloudFrontDistribution/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
-                  "aws:cdk:cloudformation:props": {
-                    "distributionConfig": {
-                      "enabled": true,
-                      "origins": [
-                        {
-                          "domainName": {
-                            "Fn::GetAtt": [
-                              "hostingBucketA91A61FE",
-                              "RegionalDomainName"
-                            ]
-                          },
-                          "id": "MicrofrontendDeploymentStackcloudFrontDistributionOrigin16E890A57",
-                          "s3OriginConfig": {
-                            "originAccessIdentity": {
-                              "Fn::Join": [
-                                "",
-                                [
-                                  "origin-access-identity/cloudfront/",
-                                  {
-                                    "Ref": "oai7A77E975"
-                                  }
-                                ]
-                              ]
-                            }
-                          }
-                        }
-                      ],
-                      "defaultCacheBehavior": {
-                        "pathPattern": "*",
-                        "targetOriginId": "MicrofrontendDeploymentStackcloudFrontDistributionOrigin16E890A57",
-                        "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
-                        "compress": true,
-                        "viewerProtocolPolicy": "allow-all",
-                        "lambdaFunctionAssociations": []
-                      },
-                      "defaultRootObject": "container/index.html",
-                      "httpVersion": "http2",
-                      "ipv6Enabled": true
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnDistribution",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_cloudfront.Distribution",
-              "version": "2.24.1"
-            }
-          },
-          "CDKMetadata": {
-            "id": "CDKMetadata",
-            "path": "MicrofrontendDeploymentStack/CDKMetadata",
-            "children": {
-              "Default": {
-                "id": "Default",
-                "path": "MicrofrontendDeploymentStack/CDKMetadata/Default",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.24.1"
-                }
-              },
-              "Condition": {
-                "id": "Condition",
-                "path": "MicrofrontendDeploymentStack/CDKMetadata/Condition",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.CfnCondition",
-                  "version": "2.24.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "constructs.Construct",
-              "version": "10.1.6"
-            }
-          }
-        },
-        "constructInfo": {
-          "fqn": "aws-cdk-lib.Stack",
-          "version": "2.24.1"
-        }
-      },
       "AuthenticationResourcesManagementStack": {
         "id": "AuthenticationResourcesManagementStack",
         "path": "AuthenticationResourcesManagementStack",
         "children": {
-          "userpool": {
-            "id": "userpool",
-            "path": "AuthenticationResourcesManagementStack/userpool",
+          "amazonUserpool": {
+            "id": "amazonUserpool",
+            "path": "AuthenticationResourcesManagementStack/amazonUserpool",
             "children": {
               "smsRole": {
                 "id": "smsRole",
-                "path": "AuthenticationResourcesManagementStack/userpool/smsRole",
+                "path": "AuthenticationResourcesManagementStack/amazonUserpool/smsRole",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "AuthenticationResourcesManagementStack/userpool/smsRole/Resource",
+                    "path": "AuthenticationResourcesManagementStack/amazonUserpool/smsRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -762,7 +36,7 @@
                               "Action": "sts:AssumeRole",
                               "Condition": {
                                 "StringEquals": {
-                                  "sts:ExternalId": "AuthenticationResourcesManagementStackuserpool83FAD804"
+                                  "sts:ExternalId": "AuthenticationResourcesManagementStackamazonUserpoolEEE5755D"
                                 }
                               },
                               "Effect": "Allow",
@@ -803,7 +77,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "AuthenticationResourcesManagementStack/userpool/Resource",
+                "path": "AuthenticationResourcesManagementStack/amazonUserpool/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Cognito::UserPool",
                   "aws:cdk:cloudformation:props": {
@@ -839,10 +113,10 @@
                       }
                     ],
                     "smsConfiguration": {
-                      "externalId": "AuthenticationResourcesManagementStackuserpool83FAD804",
+                      "externalId": "AuthenticationResourcesManagementStackamazonUserpoolEEE5755D",
                       "snsCallerArn": {
                         "Fn::GetAtt": [
-                          "userpoolsmsRole9F6DAAF2",
+                          "amazonUserpoolsmsRoleF8791B31",
                           "Arn"
                         ]
                       }
@@ -871,18 +145,18 @@
               "version": "2.24.1"
             }
           },
-          "userpool-client": {
-            "id": "userpool-client",
-            "path": "AuthenticationResourcesManagementStack/userpool-client",
+          "amazonUserpoolClient": {
+            "id": "amazonUserpoolClient",
+            "path": "AuthenticationResourcesManagementStack/amazonUserpoolClient",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "AuthenticationResourcesManagementStack/userpool-client/Resource",
+                "path": "AuthenticationResourcesManagementStack/amazonUserpoolClient/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolClient",
                   "aws:cdk:cloudformation:props": {
                     "userPoolId": {
-                      "Ref": "userpool0AC4AA96"
+                      "Ref": "amazonUserpool0AD9977B"
                     },
                     "accessTokenValidity": 1440,
                     "allowedOAuthFlows": [
@@ -921,9 +195,9 @@
               "version": "2.24.1"
             }
           },
-          "identity-pool": {
-            "id": "identity-pool",
-            "path": "AuthenticationResourcesManagementStack/identity-pool",
+          "amazonIdentityPool": {
+            "id": "amazonIdentityPool",
+            "path": "AuthenticationResourcesManagementStack/amazonIdentityPool",
             "attributes": {
               "aws:cdk:cloudformation:type": "AWS::Cognito::IdentityPool",
               "aws:cdk:cloudformation:props": {
@@ -931,11 +205,11 @@
                 "cognitoIdentityProviders": [
                   {
                     "clientId": {
-                      "Ref": "userpoolclientDA356A8E"
+                      "Ref": "amazonUserpoolClient9909AD96"
                     },
                     "providerName": {
                       "Fn::GetAtt": [
-                        "userpool0AC4AA96",
+                        "amazonUserpool0AD9977B",
                         "ProviderName"
                       ]
                     }
@@ -978,25 +252,25 @@
             "id": "Exports",
             "path": "AuthenticationResourcesManagementStack/Exports",
             "children": {
-              "Output{\"Ref\":\"userpool0AC4AA96\"}": {
-                "id": "Output{\"Ref\":\"userpool0AC4AA96\"}",
-                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpool0AC4AA96\"}",
+              "Output{\"Ref\":\"amazonUserpool0AD9977B\"}": {
+                "id": "Output{\"Ref\":\"amazonUserpool0AD9977B\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonUserpool0AD9977B\"}",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnOutput",
                   "version": "2.24.1"
                 }
               },
-              "Output{\"Ref\":\"identitypool\"}": {
-                "id": "Output{\"Ref\":\"identitypool\"}",
-                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"identitypool\"}",
+              "Output{\"Ref\":\"amazonIdentityPool\"}": {
+                "id": "Output{\"Ref\":\"amazonIdentityPool\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonIdentityPool\"}",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnOutput",
                   "version": "2.24.1"
                 }
               },
-              "Output{\"Ref\":\"userpoolclientDA356A8E\"}": {
-                "id": "Output{\"Ref\":\"userpoolclientDA356A8E\"}",
-                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpoolclientDA356A8E\"}",
+              "Output{\"Ref\":\"amazonUserpoolClient9909AD96\"}": {
+                "id": "Output{\"Ref\":\"amazonUserpoolClient9909AD96\"}",
+                "path": "AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonUserpoolClient9909AD96\"}",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnOutput",
                   "version": "2.24.1"
@@ -1018,25 +292,25 @@
         "id": "AppsyncStack",
         "path": "AppsyncStack",
         "children": {
-          "graphQLProductApi": {
-            "id": "graphQLProductApi",
-            "path": "AppsyncStack/graphQLProductApi",
+          "amazonGraphQLProductApi": {
+            "id": "amazonGraphQLProductApi",
+            "path": "AppsyncStack/amazonGraphQLProductApi",
             "children": {
               "appsync-nested-stack": {
                 "id": "appsync-nested-stack",
-                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack",
+                "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack",
                 "children": {
-                  "graphQLProductApi-api": {
-                    "id": "graphQLProductApi-api",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api",
+                  "amazonGraphQLProductApi-api": {
+                    "id": "amazonGraphQLProductApi-api",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api",
                     "children": {
                       "ApiLogsRole": {
                         "id": "ApiLogsRole",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ApiLogsRole",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole/Resource",
+                            "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ApiLogsRole/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                               "aws:cdk:cloudformation:props": {
@@ -1081,18 +355,18 @@
                       },
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLApi",
                           "aws:cdk:cloudformation:props": {
                             "authenticationType": "API_KEY",
-                            "name": "graphQLProductApi-api",
+                            "name": "amazonGraphQLProductApi-api",
                             "additionalAuthenticationProviders": [
                               {
                                 "authenticationType": "AMAZON_COGNITO_USER_POOLS",
                                 "userPoolConfig": {
                                   "userPoolId": {
-                                    "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+                                    "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpool0AD9977BC2DAE28B"
                                   },
                                   "awsRegion": {
                                     "Ref": "AWS::Region"
@@ -1104,7 +378,7 @@
                             "logConfig": {
                               "cloudWatchLogsRoleArn": {
                                 "Fn::GetAtt": [
-                                  "graphQLProductApiapiApiLogsRole6344B077",
+                                  "amazonGraphQLProductApiapiApiLogsRole91F12FE8",
                                   "Arn"
                                 ]
                               },
@@ -1120,13 +394,13 @@
                       },
                       "Schema": {
                         "id": "Schema",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Schema",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/Schema",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLSchema",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1140,17 +414,17 @@
                       },
                       "DefaultApiKey": {
                         "id": "DefaultApiKey",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/DefaultApiKey",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/DefaultApiKey",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::ApiKey",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
-                            "expires": 1685229936
+                            "expires": 1686523063
                           }
                         },
                         "constructInfo": {
@@ -1160,15 +434,15 @@
                       },
                       "ProductTable": {
                         "id": "ProductTable",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable",
                         "children": {
                           "ServiceRole": {
                             "id": "ServiceRole",
-                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole",
+                            "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole",
                             "children": {
                               "Resource": {
                                 "id": "Resource",
-                                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/Resource",
+                                "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole/Resource",
                                 "attributes": {
                                   "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                                   "aws:cdk:cloudformation:props": {
@@ -1193,11 +467,11 @@
                               },
                               "DefaultPolicy": {
                                 "id": "DefaultPolicy",
-                                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy",
+                                "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy",
                                 "children": {
                                   "Resource": {
                                     "id": "Resource",
-                                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource",
+                                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource",
                                     "attributes": {
                                       "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                                       "aws:cdk:cloudformation:props": {
@@ -1234,10 +508,10 @@
                                           ],
                                           "Version": "2012-10-17"
                                         },
-                                        "policyName": "graphQLProductApiapiProductTableServiceRoleDefaultPolicy5B388958",
+                                        "policyName": "amazonGraphQLProductApiapiProductTableServiceRoleDefaultPolicyF771D568",
                                         "roles": [
                                           {
-                                            "Ref": "graphQLProductApiapiProductTableServiceRole6E2B2CD3"
+                                            "Ref": "amazonGraphQLProductApiapiProductTableServiceRoleC95CAD52"
                                           }
                                         ]
                                       }
@@ -1261,13 +535,13 @@
                           },
                           "Resource": {
                             "id": "Resource",
-                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/Resource",
+                            "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
                               "aws:cdk:cloudformation:props": {
                                 "apiId": {
                                   "Fn::GetAtt": [
-                                    "graphQLProductApiapi87FC31AA",
+                                    "amazonGraphQLProductApiapi887221BC",
                                     "ApiId"
                                   ]
                                 },
@@ -1283,7 +557,7 @@
                                 },
                                 "serviceRoleArn": {
                                   "Fn::GetAtt": [
-                                    "graphQLProductApiapiProductTableServiceRole6E2B2CD3",
+                                    "amazonGraphQLProductApiapiProductTableServiceRoleC95CAD52",
                                     "Arn"
                                   ]
                                 }
@@ -1302,17 +576,17 @@
                       },
                       "NONE": {
                         "id": "NONE",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/NONE",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE/Resource",
+                            "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/NONE/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
                               "aws:cdk:cloudformation:props": {
                                 "apiId": {
                                   "Fn::GetAtt": [
-                                    "graphQLProductApiapi87FC31AA",
+                                    "amazonGraphQLProductApiapi887221BC",
                                     "ApiId"
                                   ]
                                 },
@@ -1339,11 +613,11 @@
                   },
                   "ProductTable": {
                     "id": "ProductTable",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/ProductTable",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/ProductTable/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
                           "aws:cdk:cloudformation:props": {
@@ -1372,7 +646,7 @@
                       },
                       "ScalingRole": {
                         "id": "ScalingRole",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/ScalingRole",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/ProductTable/ScalingRole",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.Resource",
                           "version": "2.24.1"
@@ -1386,17 +660,17 @@
                   },
                   "Query-getProduct-resolver": {
                     "id": "Query-getProduct-resolver",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-getProduct-resolver",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1421,17 +695,17 @@
                   },
                   "Query-listProducts-resolver": {
                     "id": "Query-listProducts-resolver",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-listProducts-resolver",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1456,17 +730,17 @@
                   },
                   "Mutation-createProduct-resolver": {
                     "id": "Mutation-createProduct-resolver",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1491,17 +765,17 @@
                   },
                   "Mutation-updateProduct-resolver": {
                     "id": "Mutation-updateProduct-resolver",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1526,17 +800,17 @@
                   },
                   "Mutation-deleteProduct-resolver": {
                     "id": "Mutation-deleteProduct-resolver",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
                           "aws:cdk:cloudformation:props": {
                             "apiId": {
                               "Fn::GetAtt": [
-                                "graphQLProductApiapi87FC31AA",
+                                "amazonGraphQLProductApiapi887221BC",
                                 "ApiId"
                               ]
                             },
@@ -1561,11 +835,11 @@
                   },
                   "CDKMetadata": {
                     "id": "CDKMetadata",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/CDKMetadata",
                     "children": {
                       "Default": {
                         "id": "Default",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Default",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/CDKMetadata/Default",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.CfnResource",
                           "version": "2.24.1"
@@ -1573,7 +847,7 @@
                       },
                       "Condition": {
                         "id": "Condition",
-                        "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Condition",
+                        "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/CDKMetadata/Condition",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.CfnCondition",
                           "version": "2.24.1"
@@ -1585,9 +859,9 @@
                       "version": "10.1.6"
                     }
                   },
-                  "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl": {
-                    "id": "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack/AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl",
+                  "AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl": {
+                    "id": "AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CfnOutput",
                       "version": "2.24.1"
@@ -1601,11 +875,11 @@
               },
               "appsync-nested-stack.NestedStack": {
                 "id": "appsync-nested-stack.NestedStack",
-                "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack",
+                "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack.NestedStack",
                 "children": {
                   "appsync-nested-stack.NestedStackResource": {
                     "id": "appsync-nested-stack.NestedStackResource",
-                    "path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
+                    "path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::CloudFormation::Stack",
                       "aws:cdk:cloudformation:props": {
@@ -1625,7 +899,7 @@
                               {
                                 "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                               },
-                              "/d7f1959e33861f91a91e02628b81c3fd084a083aed9556c7c599ddc899c93473.json"
+                              "/f92d2a53ec9d0a3c208ab97537bc40c02b7fd1a13ad9224ca3c1e4f827372a3b.json"
                             ]
                           ]
                         }
@@ -1656,17 +930,17 @@
               "version": "2.24.1"
             }
           },
-          "amplifyApp": {
-            "id": "amplifyApp",
-            "path": "AppsyncStack/amplifyApp",
+          "amazonAmplifyProject": {
+            "id": "amazonAmplifyProject",
+            "path": "AppsyncStack/amazonAmplifyProject",
             "children": {
               "Role": {
                 "id": "Role",
-                "path": "AppsyncStack/amplifyApp/Role",
+                "path": "AppsyncStack/amazonAmplifyProject/Role",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "AppsyncStack/amplifyApp/Role/Resource",
+                    "path": "AppsyncStack/amazonAmplifyProject/Role/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -1697,11 +971,11 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "AppsyncStack/amplifyApp/Resource",
+                "path": "AppsyncStack/amazonAmplifyProject/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Amplify::App",
                   "aws:cdk:cloudformation:props": {
-                    "name": "amplifyApp",
+                    "name": "amazonAmplifyProject",
                     "basicAuthConfig": {
                       "enableBasicAuth": false
                     },
@@ -1709,19 +983,19 @@
                       {
                         "name": "identityPoolID",
                         "value": {
-                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefidentitypool5B8C25DB"
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonIdentityPoolF6F0C74C"
                         }
                       },
                       {
                         "name": "userPoolID",
                         "value": {
-                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpool0AD9977BC2DAE28B"
                         }
                       },
                       {
                         "name": "userPoolClientID",
                         "value": {
-                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+                          "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpoolClient9909AD96C0F1CA5A"
                         }
                       },
                       {
@@ -1734,15 +1008,15 @@
                         "name": "appsyncApi",
                         "value": {
                           "Fn::GetAtt": [
-                            "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
-                            "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+                            "amazonGraphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResourceD17BC6DD",
+                            "Outputs.AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl"
                           ]
                         }
                       }
                     ],
                     "iamServiceRole": {
                       "Fn::GetAtt": [
-                        "amplifyAppRoleAE39041F",
+                        "amazonAmplifyProjectRoleFB547869",
                         "Arn"
                       ]
                     },
@@ -1757,17 +1031,17 @@
               },
               "main": {
                 "id": "main",
-                "path": "AppsyncStack/amplifyApp/main",
+                "path": "AppsyncStack/amazonAmplifyProject/main",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "AppsyncStack/amplifyApp/main/Resource",
+                    "path": "AppsyncStack/amazonAmplifyProject/main/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::Amplify::Branch",
                       "aws:cdk:cloudformation:props": {
                         "appId": {
                           "Fn::GetAtt": [
-                            "amplifyApp20D15BF0",
+                            "amazonAmplifyProject487FE897",
                             "AppId"
                           ]
                         },

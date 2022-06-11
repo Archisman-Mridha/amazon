@@ -7,7 +7,7 @@ import { AppsyncStack } from "../stacks/appsync.stack";
 
 const app = new App( )
 
-new MicrofrontendDeploymentStack(app, "MicrofrontendDeploymentStack", { })
+// new MicrofrontendDeploymentStack(app, "MicrofrontendDeploymentStack", { })
 
 const { userPool, userPoolClient, identityPool }=
     new AuthenticationResourcesManagementStack(app, "AuthenticationResourcesManagementStack", { })

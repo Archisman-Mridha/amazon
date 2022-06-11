@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127": {
+  "amazonGraphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResourceD17BC6DD": {
    "Type": "AWS::CloudFormation::Stack",
    "Properties": {
     "TemplateURL": {
@@ -19,7 +19,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/d7f1959e33861f91a91e02628b81c3fd084a083aed9556c7c599ddc899c93473.json"
+       "/f92d2a53ec9d0a3c208ab97537bc40c02b7fd1a13ad9224ca3c1e4f827372a3b.json"
       ]
      ]
     }
@@ -27,12 +27,12 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
-    "aws:asset:path": "AppsyncStackgraphQLProductApiappsyncnestedstackA4CEDD5B.nested.template.json",
+    "aws:cdk:path": "AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource",
+    "aws:asset:path": "AppsyncStackamazonGraphQLProductApiappsyncnestedstack79EE2BB1.nested.template.json",
     "aws:asset:property": "TemplateURL"
    }
   },
-  "amplifyAppRoleAE39041F": {
+  "amazonAmplifyProjectRoleFB547869": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -49,13 +49,13 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "AppsyncStack/amplifyApp/Role/Resource"
+    "aws:cdk:path": "AppsyncStack/amazonAmplifyProject/Role/Resource"
    }
   },
-  "amplifyApp20D15BF0": {
+  "amazonAmplifyProject487FE897": {
    "Type": "AWS::Amplify::App",
    "Properties": {
-    "Name": "amplifyApp",
+    "Name": "amazonAmplifyProject",
     "BasicAuthConfig": {
      "EnableBasicAuth": false
     },
@@ -63,19 +63,19 @@
      {
       "Name": "identityPoolID",
       "Value": {
-       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefidentitypool5B8C25DB"
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonIdentityPoolF6F0C74C"
       }
      },
      {
       "Name": "userPoolID",
       "Value": {
-       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpool0AD9977BC2DAE28B"
       }
      },
      {
       "Name": "userPoolClientID",
       "Value": {
-       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+       "Fn::ImportValue": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpoolClient9909AD96C0F1CA5A"
       }
      },
      {
@@ -88,15 +88,15 @@
       "Name": "appsyncApi",
       "Value": {
        "Fn::GetAtt": [
-        "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
-        "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+        "amazonGraphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResourceD17BC6DD",
+        "Outputs.AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl"
        ]
       }
      }
     ],
     "IAMServiceRole": {
      "Fn::GetAtt": [
-      "amplifyAppRoleAE39041F",
+      "amazonAmplifyProjectRoleFB547869",
       "Arn"
      ]
     },
@@ -104,15 +104,15 @@
     "Repository": "https://github.com/Archisman-Mridha/amazon"
    },
    "Metadata": {
-    "aws:cdk:path": "AppsyncStack/amplifyApp/Resource"
+    "aws:cdk:path": "AppsyncStack/amazonAmplifyProject/Resource"
    }
   },
-  "amplifyAppmain786CCA38": {
+  "amazonAmplifyProjectmain13ACD3A1": {
    "Type": "AWS::Amplify::Branch",
    "Properties": {
     "AppId": {
      "Fn::GetAtt": [
-      "amplifyApp20D15BF0",
+      "amazonAmplifyProject487FE897",
       "AppId"
      ]
     },
@@ -121,13 +121,13 @@
     "EnablePullRequestPreview": true
    },
    "Metadata": {
-    "aws:cdk:path": "AppsyncStack/amplifyApp/main/Resource"
+    "aws:cdk:path": "AppsyncStack/amazonAmplifyProject/main/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2OWw6DIBBF1+I/jI+0/W7rAkzsAhqKGEcRiECbhrD3ijV+ncncOydTQahOUGbsYynvJirxBeHhGJ9I3atjaLwz3pG19QzIZgitliIFiZGw2UjsvxDWzc2YFNwXpvgQ41YSVvuFbwe1Vh061CqS6gwFZdIMDIrsun+QJ+6+PQxJefiU7gSMNn+XFyhXQzZaRLp45XAW0P75A0RtakrXAAAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2OXQ6DIBCEz+I7rD+pfW7rAZrYAzQUMa4iEIE2DeHuFWt8msnO7JepIFQnKDP2sZR3E5X4gvBwjE+k6dVh7t4Z78jaegZkM4RWS5GCpJGw2UjsvxDWy9WYFNwWpvgQ41YSVvuFbw+NVh061CqSqoaCMmkGBkV22RfkSXfeHoaEPHhKdwJGm7/LM5T1On20iHTxyuEsoP3rD4QJQl3XAAAA"
    },
    "Metadata": {
     "aws:cdk:path": "AppsyncStack/CDKMetadata/Default"
@@ -140,8 +140,8 @@
    "Description": "Output for aws_appsync_graphqlEndpoint",
    "Value": {
     "Fn::GetAtt": [
-     "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127",
-     "Outputs.AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+     "amazonGraphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResourceD17BC6DD",
+     "Outputs.AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl"
     ]
    }
   }

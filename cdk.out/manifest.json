@@ -7,137 +7,6 @@
         "file": "tree.json"
       }
     },
-    "MicrofrontendDeploymentStack.assets": {
-      "type": "cdk:asset-manifest",
-      "properties": {
-        "file": "MicrofrontendDeploymentStack.assets.json",
-        "requiresBootstrapStackVersion": 6,
-        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
-      }
-    },
-    "MicrofrontendDeploymentStack": {
-      "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/unknown-region",
-      "properties": {
-        "templateFile": "MicrofrontendDeploymentStack.template.json",
-        "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f50c7bf7f770379333487b743f438f909f9bec406ba95a15f40f93906fc57c6d.json",
-        "requiresBootstrapStackVersion": 6,
-        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
-        "additionalDependencies": [
-          "MicrofrontendDeploymentStack.assets"
-        ],
-        "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
-          "requiresBootstrapStackVersion": 8,
-          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
-        }
-      },
-      "dependencies": [
-        "MicrofrontendDeploymentStack.assets"
-      ],
-      "metadata": {
-        "/MicrofrontendDeploymentStack/hostingBucket/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "hostingBucketA91A61FE"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/hostingBucket/Policy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "hostingBucketPolicy97364CB4"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/hostingBucket/AutoDeleteObjectsCustomResource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "hostingBucketAutoDeleteObjectsCustomResourceF74492FF"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/microfrontendsS3Deployment/AwsCliLayer/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "microfrontendsS3DeploymentAwsCliLayerD738F6A3"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/microfrontendsS3Deployment/CustomResource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "microfrontendsS3DeploymentCustomResource0A730F19"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/oai/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "oai7A77E975"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/cloudFrontDistribution/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "cloudFrontDistributionF6A12875"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/CDKMetadata/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CDKMetadata"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/CDKMetadata/Condition": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CDKMetadataAvailable"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/BootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BootstrapVersion"
-          }
-        ],
-        "/MicrofrontendDeploymentStack/CheckBootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CheckBootstrapVersion"
-          }
-        ]
-      },
-      "displayName": "MicrofrontendDeploymentStack"
-    },
     "AuthenticationResourcesManagementStack.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
@@ -154,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ce8b9dd2cf254618f0b75c94beb7da867c87f3a6e761740f1157499476829980.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a38daf28556824cf4b4051152241feb2052c73568596854f2212267790453a47.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -170,28 +39,28 @@
         "AuthenticationResourcesManagementStack.assets"
       ],
       "metadata": {
-        "/AuthenticationResourcesManagementStack/userpool/smsRole/Resource": [
+        "/AuthenticationResourcesManagementStack/amazonUserpool/smsRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "userpoolsmsRole9F6DAAF2"
+            "data": "amazonUserpoolsmsRoleF8791B31"
           }
         ],
-        "/AuthenticationResourcesManagementStack/userpool/Resource": [
+        "/AuthenticationResourcesManagementStack/amazonUserpool/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "userpool0AC4AA96"
+            "data": "amazonUserpool0AD9977B"
           }
         ],
-        "/AuthenticationResourcesManagementStack/userpool-client/Resource": [
+        "/AuthenticationResourcesManagementStack/amazonUserpoolClient/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "userpoolclientDA356A8E"
+            "data": "amazonUserpoolClient9909AD96"
           }
         ],
-        "/AuthenticationResourcesManagementStack/identity-pool": [
+        "/AuthenticationResourcesManagementStack/amazonIdentityPool": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "identitypool"
+            "data": "amazonIdentityPool"
           }
         ],
         "/AuthenticationResourcesManagementStack/CDKMetadata/Default": [
@@ -206,22 +75,22 @@
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpool0AC4AA96\"}": [
+        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonUserpool0AD9977B\"}": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputRefuserpool0AC4AA967C30B4CC"
+            "data": "ExportsOutputRefamazonUserpool0AD9977BC2DAE28B"
           }
         ],
-        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"identitypool\"}": [
+        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonIdentityPool\"}": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputRefidentitypool5B8C25DB"
+            "data": "ExportsOutputRefamazonIdentityPoolF6F0C74C"
           }
         ],
-        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"userpoolclientDA356A8E\"}": [
+        "/AuthenticationResourcesManagementStack/Exports/Output{\"Ref\":\"amazonUserpoolClient9909AD96\"}": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+            "data": "ExportsOutputRefamazonUserpoolClient9909AD96C0F1CA5A"
           }
         ],
         "/AuthenticationResourcesManagementStack/BootstrapVersion": [
@@ -255,7 +124,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/7e8e1dba57a075fd1ccfd2911ab82aa14b48e6b2976deaaa93ad6ac2e14a0e5e.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/7bf156256ace46a05a58e76bfee6fe6a5bd79f4df2da04ae0ca0d50572f9111f.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -272,112 +141,112 @@
         "AppsyncStack.assets"
       ],
       "metadata": {
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ApiLogsRole/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ApiLogsRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiApiLogsRole6344B077"
+            "data": "amazonGraphQLProductApiapiApiLogsRole91F12FE8"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapi87FC31AA"
+            "data": "amazonGraphQLProductApiapi887221BC"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/Schema": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/Schema": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiSchema227BE598"
+            "data": "amazonGraphQLProductApiapiSchema9F11713F"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/DefaultApiKey": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/DefaultApiKey": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiDefaultApiKey761462B2"
+            "data": "amazonGraphQLProductApiapiDefaultApiKey5AAD0928"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiProductTableServiceRole6E2B2CD3"
+            "data": "amazonGraphQLProductApiapiProductTableServiceRoleC95CAD52"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiProductTableServiceRoleDefaultPolicy5B388958"
+            "data": "amazonGraphQLProductApiapiProductTableServiceRoleDefaultPolicyF771D568"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/ProductTable/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/ProductTable/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiProductTable93BFCAD1"
+            "data": "amazonGraphQLProductApiapiProductTable113A69F8"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/graphQLProductApi-api/NONE/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/amazonGraphQLProductApi-api/NONE/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiapiNONE559FC471"
+            "data": "amazonGraphQLProductApiapiNONEFF069DF0"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/ProductTable/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/ProductTable/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ProductTableB8D4E9ED"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-getProduct-resolver/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "QuerygetProductresolver6058111C"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Query-listProducts-resolver/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "QuerylistProductsresolverD617A1F1"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-createProduct-resolver/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "MutationcreateProductresolver0DC8A331"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-updateProduct-resolver/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "MutationupdateProductresolver61B5F41A"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/Mutation-deleteProduct-resolver/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "MutationdeleteProductresolver5949E36F"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Default": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/CDKMetadata/Condition": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/CDKMetadata/Condition": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack/AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack/AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "AppsyncStackgraphQLProductApiappsyncnestedstackgraphQLProductApiapi7A95C2ECGraphQLUrl"
+            "data": "AppsyncStackamazonGraphQLProductApiappsyncnestedstackamazonGraphQLProductApiapi6222C158GraphQLUrl"
           }
         ],
-        "/AppsyncStack/graphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource": [
+        "/AppsyncStack/amazonGraphQLProductApi/appsync-nested-stack.NestedStack/appsync-nested-stack.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "graphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResource26F80127"
+            "data": "amazonGraphQLProductApiappsyncnestedstackNestedStackappsyncnestedstackNestedStackResourceD17BC6DD"
           }
         ],
         "/AppsyncStack/appsyncGraphQLEndpointOutput": [
@@ -386,22 +255,22 @@
             "data": "appsyncGraphQLEndpointOutput"
           }
         ],
-        "/AppsyncStack/amplifyApp/Role/Resource": [
+        "/AppsyncStack/amazonAmplifyProject/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "amplifyAppRoleAE39041F"
+            "data": "amazonAmplifyProjectRoleFB547869"
           }
         ],
-        "/AppsyncStack/amplifyApp/Resource": [
+        "/AppsyncStack/amazonAmplifyProject/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "amplifyApp20D15BF0"
+            "data": "amazonAmplifyProject487FE897"
           }
         ],
-        "/AppsyncStack/amplifyApp/main/Resource": [
+        "/AppsyncStack/amazonAmplifyProject/main/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "amplifyAppmain786CCA38"
+            "data": "amazonAmplifyProjectmain13ACD3A1"
           }
         ],
         "/AppsyncStack/CDKMetadata/Default": [

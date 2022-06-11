@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "userpoolsmsRole9F6DAAF2": {
+  "amazonUserpoolsmsRoleF8791B31": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -9,7 +9,7 @@
        "Action": "sts:AssumeRole",
        "Condition": {
         "StringEquals": {
-         "sts:ExternalId": "AuthenticationResourcesManagementStackuserpool83FAD804"
+         "sts:ExternalId": "AuthenticationResourcesManagementStackamazonUserpoolEEE5755D"
         }
        },
        "Effect": "Allow",
@@ -37,10 +37,10 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "AuthenticationResourcesManagementStack/userpool/smsRole/Resource"
+    "aws:cdk:path": "AuthenticationResourcesManagementStack/amazonUserpool/smsRole/Resource"
    }
   },
-  "userpool0AC4AA96": {
+  "amazonUserpool0AD9977B": {
    "Type": "AWS::Cognito::UserPool",
    "Properties": {
     "AdminCreateUserConfig": {
@@ -75,10 +75,10 @@
      }
     ],
     "SmsConfiguration": {
-     "ExternalId": "AuthenticationResourcesManagementStackuserpool83FAD804",
+     "ExternalId": "AuthenticationResourcesManagementStackamazonUserpoolEEE5755D",
      "SnsCallerArn": {
       "Fn::GetAtt": [
-       "userpoolsmsRole9F6DAAF2",
+       "amazonUserpoolsmsRoleF8791B31",
        "Arn"
       ]
      }
@@ -98,14 +98,14 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "AuthenticationResourcesManagementStack/userpool/Resource"
+    "aws:cdk:path": "AuthenticationResourcesManagementStack/amazonUserpool/Resource"
    }
   },
-  "userpoolclientDA356A8E": {
+  "amazonUserpoolClient9909AD96": {
    "Type": "AWS::Cognito::UserPoolClient",
    "Properties": {
     "UserPoolId": {
-     "Ref": "userpool0AC4AA96"
+     "Ref": "amazonUserpool0AD9977B"
     },
     "AccessTokenValidity": 1440,
     "AllowedOAuthFlows": [
@@ -133,21 +133,21 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "AuthenticationResourcesManagementStack/userpool-client/Resource"
+    "aws:cdk:path": "AuthenticationResourcesManagementStack/amazonUserpoolClient/Resource"
    }
   },
-  "identitypool": {
+  "amazonIdentityPool": {
    "Type": "AWS::Cognito::IdentityPool",
    "Properties": {
     "AllowUnauthenticatedIdentities": false,
     "CognitoIdentityProviders": [
      {
       "ClientId": {
-       "Ref": "userpoolclientDA356A8E"
+       "Ref": "amazonUserpoolClient9909AD96"
       },
       "ProviderName": {
        "Fn::GetAtt": [
-        "userpool0AC4AA96",
+        "amazonUserpool0AD9977B",
         "ProviderName"
        ]
       }
@@ -155,13 +155,13 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "AuthenticationResourcesManagementStack/identity-pool"
+    "aws:cdk:path": "AuthenticationResourcesManagementStack/amazonIdentityPool"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02Myw7CIBBFv6V7Okqj/gArd6bGtUFAMy1lEqAaQ/h3ocbH6p6ck9wOug3wRj5Cq/TYWrxAOkapRlbUOSm6OYwE6RSMPxBZJq7uyx8QFo2L/+ln9roAxme1maGcIPVkTU11c17IBJq9WqwgpzEiucwcaQNDWN35DvgW1s0QEFs/l8PJQP/eF7buKgDCAAAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02OzQoCIRSFn6W93nCoXsBVu5hoHaYWd8bxgjpFiO+eTvSzOh/fgcPpoNuAWKlH5NqM3OEF8jEpPbKqzlnTzWMiyKdow4HIMXn1X/6AdGh9+q9+Zm8qYHo2WxiqCXJPzraqZSkL2Uhz0IuV5A0mJF+YJ2NhiOu72IHY1ptDRORhroOThf6dL3aKAhfCAAAA"
    },
    "Metadata": {
     "aws:cdk:path": "AuthenticationResourcesManagementStack/CDKMetadata/Default"
@@ -364,28 +364,28 @@
   }
  },
  "Outputs": {
-  "ExportsOutputRefuserpool0AC4AA967C30B4CC": {
+  "ExportsOutputRefamazonUserpool0AD9977BC2DAE28B": {
    "Value": {
-    "Ref": "userpool0AC4AA96"
+    "Ref": "amazonUserpool0AD9977B"
    },
    "Export": {
-    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpool0AC4AA967C30B4CC"
+    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpool0AD9977BC2DAE28B"
    }
   },
-  "ExportsOutputRefidentitypool5B8C25DB": {
+  "ExportsOutputRefamazonIdentityPoolF6F0C74C": {
    "Value": {
-    "Ref": "identitypool"
+    "Ref": "amazonIdentityPool"
    },
    "Export": {
-    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefidentitypool5B8C25DB"
+    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonIdentityPoolF6F0C74C"
    }
   },
-  "ExportsOutputRefuserpoolclientDA356A8EE2DF2251": {
+  "ExportsOutputRefamazonUserpoolClient9909AD96C0F1CA5A": {
    "Value": {
-    "Ref": "userpoolclientDA356A8E"
+    "Ref": "amazonUserpoolClient9909AD96"
    },
    "Export": {
-    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefuserpoolclientDA356A8EE2DF2251"
+    "Name": "AuthenticationResourcesManagementStack:ExportsOutputRefamazonUserpoolClient9909AD96C0F1CA5A"
    }
   }
  },

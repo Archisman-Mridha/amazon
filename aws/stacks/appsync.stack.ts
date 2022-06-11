@@ -1,6 +1,6 @@
 import { Duration, Expiration, SecretValue, Stack, StackProps } from "aws-cdk-lib"
 import { Construct } from "constructs"
-import { CfnIdentityPool, UserPool, UserPoolClient } from 'aws-cdk-lib/aws-cognito';
+import { CfnIdentityPool, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 import { App, GitHubSourceCodeProvider } from "@aws-cdk/aws-amplify-alpha"
 import { AppSyncTransformer } from "cdk-appsync-transformer"
 import { AuthorizationType, FieldLogLevel, UserPoolDefaultAction } from "@aws-cdk/aws-appsync-alpha"
