@@ -72,3 +72,23 @@ app/app.*.symbols
 
 # Obfuscation related
 app/app.*.map.json
+
+# Flutter amplify
+app/amplify/\#current-cloud-backend
+app/amplify/.config/local-*
+app/amplify/logs
+app/amplify/mock-data
+app/amplify/backend/amplify-meta.json
+app/amplify/backend/.temp
+app/build/
+app/dist/
+app/node_modules/
+app/aws-exports.js
+app/awsconfiguration.json
+app/amplifyconfiguration.json
+app/amplifyconfiguration.dart
+app/amplify-build-config.json
+app/amplify-gradle-config.json
+app/amplifytools.xcconfig
+app/.secret-*
+app/**.sample

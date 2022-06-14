@@ -91,7 +91,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1686523063
+    "Expires": 1686775611
    },
    "DependsOn": [
     "amazonGraphQLProductApiapiSchema9F11713F"
